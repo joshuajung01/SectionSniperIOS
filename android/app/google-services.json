@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "155075492045",
+    "firebase_url": "https://section-sniper-eb03e.firebaseio.com",
+    "project_id": "section-sniper-eb03e",
+    "storage_bucket": "section-sniper-eb03e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:155075492045:android:8deb3107e0ee67304b1184",
+        "android_client_info": {
+          "package_name": "com.jsquared.SectionSniper"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "155075492045-7ncsr0tgequda8ao4i2oh6r2htu301l0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCov-lyTJwkvE2BuQZWn4potZ7uXkDNSxE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "155075492045-7ncsr0tgequda8ao4i2oh6r2htu301l0.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "155075492045-dcrqbibhl8b2kau4qau999d4oje1f47k.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.jsquared.SectionSniper"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
