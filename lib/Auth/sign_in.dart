@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'file:///C:/Users/Joshua/IdeaProjects/SectionSniper/lib/Services/auth.dart';
+import 'package:section_sniper/Services/auth.dart';
 import 'package:section_sniper/Services/loading.dart';
 
 class SignIn extends StatefulWidget {

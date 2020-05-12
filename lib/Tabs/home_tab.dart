@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'file:///C:/Users/Joshua/IdeaProjects/SectionSniper/lib/Models/course.dart';
+import 'package:section_sniper/Models/course.dart';
 
 class HomeTab extends StatefulWidget {
   @override
