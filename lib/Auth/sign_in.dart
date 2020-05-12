@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'file:///C:/Users/Joshua/IdeaProjects/SectionSniper/lib/Services/auth.dart';
+import 'package:section_sniper/Models/user.dart';
 
 class SignIn extends StatefulWidget {
 
@@ -30,10 +31,10 @@ class _SignInState extends State<SignIn> {
         navigationBar: CupertinoNavigationBar(
           leading: Align(
             alignment: Alignment.centerLeft,
-            child: Text('Sign-In'),
+            child: Text('Sign-In to SectionSniper'),
           ),
           trailing: FlatButton.icon(
-            icon: Icon(CupertinoIcons.profile_circled),
+            icon: Icon(CupertinoIcons.person_add_solid),
             label: Text('Register'),
             onPressed: (){
               widget.toggleView();
@@ -124,6 +125,7 @@ class _SignInState extends State<SignIn> {
 
                         if(prelimInputValid){
                           dynamic result = await _auth.signInWithEmailAndPassword(email, password);
+                          print(result.getVerified());
                           if(result == null){
                             showCupertinoDialog(
                                 context: context,
@@ -140,8 +142,45 @@ class _SignInState extends State<SignIn> {
                                     ],
                                   );
                                 }
-                            );
-                          }
+                              );
+                            }
+                            else if(!result.getVerified()){
+                              showCupertinoDialog(
+                                  context: context,
+                                  builder: (context){
+                                    return CupertinoAlertDialog(
+                                      title: Text('Verificaion Needed'),
+                                      content: Text('Please check your email for Verification details, and restart the app'),
+                                      actions: <Widget>[
+                                        CupertinoButton(
+                                            onPressed: () {
+                                              Navigator.of(context).pop();
+                                            },
+                                            child: Text('Ok'))
+                                      ],
+                                    );
+                                  }
+                                );
+                              }
+
+                            else{
+                              showCupertinoDialog(
+                                  context: context,
+                                  builder: (context){
+                                    return CupertinoAlertDialog(
+                                      title: Text('Log-In Successful'),
+                                      content: Text('This app is still in Beta.\nTell Joshua if you find any bugs'),
+                                      actions: <Widget>[
+                                        CupertinoButton(
+                                            onPressed: () {
+                                              Navigator.of(context).pop();
+                                            },
+                                            child: Text('Ok'))
+                                      ],
+                                    );
+                                  }
+                              );
+                            }
                         }
                       },
                     ),

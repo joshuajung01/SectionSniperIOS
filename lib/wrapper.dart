@@ -10,7 +10,7 @@ class Wrapper extends StatelessWidget {
 
     final user = Provider.of<User>(context);
 
-    if(user == null){
+    if(user == null || user.isVerified == false){
       return Authenticate();
     }
     else{

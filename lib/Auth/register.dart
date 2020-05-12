@@ -31,7 +31,7 @@ class _RegisterState extends State<Register> {
       navigationBar: CupertinoNavigationBar(
         leading: Align(
           alignment: Alignment.centerLeft,
-          child: Text('Register'),
+          child: Text('Register for SectionSniper'),
         ),
         trailing: FlatButton.icon(
           icon: Icon(CupertinoIcons.profile_circled),
@@ -124,7 +124,25 @@ class _RegisterState extends State<Register> {
 
                     if(prelimInputValid){
                       dynamic result = await _auth.registerWithEmailAndPassword(email, password);
-                      if(result == null){
+                      if(result != null){
+                        showCupertinoDialog(
+                            context: context,
+                            builder: (context){
+                              return CupertinoAlertDialog(
+                                title: Text('Verification'),
+                                content: Text('Please check your email to verify your account'),
+                                actions: <Widget>[
+                                  CupertinoButton(
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                      },
+                                      child: Text('Ok'))
+                                ],
+                              );
+                            }
+                        );
+                      }
+                      else if(result == null){
                         showCupertinoDialog(
                             context: context,
                             builder: (context){
