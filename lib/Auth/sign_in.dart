@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'file:///C:/Users/Joshua/IdeaProjects/SectionSniper/lib/Services/auth.dart';
-import 'package:section_sniper/Models/user.dart';
+import 'package:section_sniper/Services/loading.dart';
 
 class SignIn extends StatefulWidget {
 
@@ -20,13 +20,14 @@ class _SignInState extends State<SignIn> {
   TextEditingController _passwordField = TextEditingController();
 
   bool prelimInputValid = true;
+  bool loading = false;
 
   String email = '';
   String password = '';
 
   @override
   Widget build(BuildContext context) {
-    return CupertinoPageScaffold(
+    return loading ? Loading() : CupertinoPageScaffold(
         backgroundColor: CupertinoColors.white,
         navigationBar: CupertinoNavigationBar(
           leading: Align(
@@ -75,14 +76,14 @@ class _SignInState extends State<SignIn> {
                       },
                     ),
 
-                    SizedBox(height: 20.0,),
+                    SizedBox(height: 80.0,),
 
                     CupertinoButton(
                       color: CupertinoColors.activeBlue,
                       child: Text('Sign-In'),
                       onPressed: () async{
                         if(_emailField.text.isEmpty || _passwordField.text.isEmpty){
-                          prelimInputValid = false;
+                          setState(() => prelimInputValid = false);
                           showCupertinoDialog(
                               context: context,
                               builder: (context){
@@ -101,7 +102,7 @@ class _SignInState extends State<SignIn> {
                           );
                         }
                         else if(_passwordField.text.length < 8){
-                          prelimInputValid = false;
+                          setState(() => prelimInputValid = false);
                           showCupertinoDialog(
                               context: context,
                               builder: (context){
@@ -120,12 +121,12 @@ class _SignInState extends State<SignIn> {
                           );
                         }
                         else{
-                          prelimInputValid = true;
+                          setState(() => prelimInputValid = true);
                         }
 
                         if(prelimInputValid){
+                          setState(() => loading = true);
                           dynamic result = await _auth.signInWithEmailAndPassword(email, password);
-                          print(result.getVerified());
                           if(result == null){
                             showCupertinoDialog(
                                 context: context,
@@ -143,14 +144,16 @@ class _SignInState extends State<SignIn> {
                                   );
                                 }
                               );
+                              setState(() => loading = false);
                             }
                             else if(!result.getVerified()){
+                            setState(() => loading = false);
                               showCupertinoDialog(
                                   context: context,
                                   builder: (context){
                                     return CupertinoAlertDialog(
                                       title: Text('Verificaion Needed'),
-                                      content: Text('Please check your email for Verification details, and restart the app'),
+                                      content: Text('Please check your email for Verification details'),
                                       actions: <Widget>[
                                         CupertinoButton(
                                             onPressed: () {
@@ -164,6 +167,10 @@ class _SignInState extends State<SignIn> {
                               }
 
                             else{
+                              setState(() => loading = true);
+                              await _auth.signOut();
+                              await _auth.signInWithEmailAndPassword(email, password);
+                              setState(() => loading = false);
                               showCupertinoDialog(
                                   context: context,
                                   builder: (context){
@@ -192,4 +199,3 @@ class _SignInState extends State<SignIn> {
       );
     }
   }
-

@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:section_sniper/Services/auth.dart';
+import 'package:section_sniper/Services/loading.dart';
 
 class Register extends StatefulWidget {
 
@@ -19,6 +20,7 @@ class _RegisterState extends State<Register> {
   TextEditingController _passwordField = TextEditingController();
 
   bool prelimInputValid = true;
+  bool loading = false;
 
   String email = '';
   String password = '';
@@ -26,7 +28,7 @@ class _RegisterState extends State<Register> {
 
   @override
   Widget build(BuildContext context) {
-    return CupertinoPageScaffold(
+    return loading ? Loading(): CupertinoPageScaffold(
       backgroundColor: CupertinoColors.white,
       navigationBar: CupertinoNavigationBar(
         leading: Align(
@@ -74,14 +76,14 @@ class _RegisterState extends State<Register> {
                     },
                   ),
 
-                SizedBox(height: 20.0,),
+                SizedBox(height: 80.0,),
 
                 CupertinoButton(
                   color: CupertinoColors.activeBlue,
                   child: Text('Register'),
                   onPressed: () async{
                     if(_emailField.text.isEmpty || _passwordField.text.isEmpty){
-                      prelimInputValid = false;
+                      setState(() => prelimInputValid = false);
                       showCupertinoDialog(
                           context: context,
                           builder: (context){
@@ -100,7 +102,7 @@ class _RegisterState extends State<Register> {
                         );
                       }
                     else if(_passwordField.text.length < 8){
-                      prelimInputValid = false;
+                      setState(() => prelimInputValid = false);
                       showCupertinoDialog(
                           context: context,
                           builder: (context){
@@ -119,11 +121,13 @@ class _RegisterState extends State<Register> {
                         );
                       }
                     else{
-                      prelimInputValid = true;
+                      setState(() => prelimInputValid = true);
                     }
 
                     if(prelimInputValid){
+                      setState(() => loading = true);
                       dynamic result = await _auth.registerWithEmailAndPassword(email, password);
+                      setState(() => loading = false);
                       if(result != null){
                         showCupertinoDialog(
                             context: context,
@@ -159,6 +163,7 @@ class _RegisterState extends State<Register> {
                               );
                             }
                         );
+                        setState(() => loading = false);
                       }
                     }
                   },

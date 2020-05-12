@@ -10,6 +10,7 @@ class AuthService {
   }
 
   Stream<User> get user{
+    print('cat');
     return _auth.onAuthStateChanged
         .map(_userFromFirebaseUser);
   }
