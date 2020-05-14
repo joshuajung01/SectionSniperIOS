@@ -1,5 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:section_sniper/Models/course.dart';
 import 'package:section_sniper/Models/user.dart';
+import 'package:section_sniper/Services/database.dart';
 
 class AuthService {
 
@@ -10,7 +12,6 @@ class AuthService {
   }
 
   Stream<User> get user{
-    print('cat');
     return _auth.onAuthStateChanged
         .map(_userFromFirebaseUser);
   }
@@ -34,6 +35,8 @@ class AuthService {
       AuthResult result = await _auth.createUserWithEmailAndPassword(email: email, password: password);
       await result.user.sendEmailVerification();
       FirebaseUser user = result.user;
+
+      await DatabaseService(uid: user.uid).updateNewUserData(Course('RAND', 123, 123).toString());
       return _userFromFirebaseUser(user);
     }
     catch(e){
