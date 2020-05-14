@@ -6,6 +6,7 @@ import 'package:section_sniper/Models/user.dart';
 import 'package:section_sniper/Services/database.dart';
 import 'package:section_sniper/Services/loading.dart';
 import 'package:section_sniper/home.dart';
+import 'addingCourse.dart';
 
 class HomeTab extends StatefulWidget {
   @override
@@ -96,6 +97,7 @@ class _HomeTabState extends State<HomeTab>{
               slivers: <Widget>[
 
                 CupertinoSliverNavigationBar(
+                  heroTag: 'navBar1',
                   largeTitle: Text('Open Courses'),
                 ),
 
@@ -134,15 +136,18 @@ class _HomeTabState extends State<HomeTab>{
                   delegate: SliverChildBuilderDelegate(
                         (BuildContext context, int index) {
                       if (index > currentCourses.length) return null;
-                      else if(index == currentCourses.length-1 || currentCourses.length == 0){
+                      else if(index == currentCourses.length || currentCourses.length == 0){
                         return Card(
                           child: ListTile(
-                            title: Center(
-                              child: CupertinoButton(
-                                child: Icon(CupertinoIcons.add_circled_solid),
-                                onPressed: null,
-                              ),
-                            ),
+                            leading:  Icon(CupertinoIcons.add_circled_solid),
+                            title: Text('Add Current Course'),
+                            onTap: (){
+                              Navigator.push(
+                                  context,
+                                  CupertinoPageRoute(
+                                      builder: (context) =>
+                                          addingCourse(category: 'Current')));
+                            },
                           ),
                         );
                       }
@@ -176,3 +181,9 @@ class _HomeTabState extends State<HomeTab>{
     );
   }
 }
+
+
+
+
+
+

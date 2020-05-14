@@ -5,7 +5,7 @@ import 'package:section_sniper/Models/user.dart';
 import 'package:section_sniper/Services/database.dart';
 import 'package:section_sniper/Services/loading.dart';
 import 'package:section_sniper/home.dart';
-
+import 'addingCourse.dart';
 import '../Models/course.dart';
 
 class WishlistTab extends StatefulWidget {
@@ -25,7 +25,7 @@ class _WishlistTabState extends State<WishlistTab>{
 //    Course('CSCE', 181, 500),
 //  ];
 
-  Future<void> _removeSearchingClass(String check, DatabaseService userDB) async{
+  Future<void> _removePendingClass(String check, DatabaseService userDB) async{
     return showCupertinoDialog<void>(
         context: context,
         builder: (BuildContext context){
@@ -76,25 +76,64 @@ class _WishlistTabState extends State<WishlistTab>{
                 CupertinoSliverNavigationBar(
                   largeTitle: Text('Pending Courses',)
                 ),
-
                 SliverFixedExtentList(
                   itemExtent: 50.0,
                   delegate: SliverChildBuilderDelegate(
                         (BuildContext context, int index) {
-                      if (index >= pendingCourses.length) return null;
-                      return Card(
-                        child: ListTile(
-                          leading: CupertinoActivityIndicator(),
-                          title: Text(pendingCourses.elementAt(index).toString()),
-                        trailing: IconButton(icon: Icon(CupertinoIcons.clear_circled),
-                                            color: CupertinoColors.systemRed,
-                                            onPressed: (){_removeSearchingClass(pendingCourses.elementAt(index).toString(), userDB);}
-                        ),
-                        ),
-                      );
+                      if (index > pendingCourses.length) return null;
+                      else if(index == pendingCourses.length || pendingCourses.length == 0){
+                        return Card(
+                          child: ListTile(
+                            leading:  Icon(CupertinoIcons.add_circled_solid),
+                            title: Text('Add Pending Course'),
+                            onTap: (){
+                              Navigator.push(
+                                  context,
+                                  CupertinoPageRoute(
+                                      builder: (context) =>
+                                          addingCourse(category: 'Pending')));
+                            },
+                          ),
+                        );
+                      }
+                      else{
+                        return Card(
+                          child: ListTile(
+                            leading: Icon(CupertinoIcons.check_mark_circled_solid,),
+                            title: Text(pendingCourses.elementAt(index).toString()),
+                            trailing: IconButton(icon: Icon(CupertinoIcons.clear_circled),
+                              onPressed: (){
+                                _removePendingClass(pendingCourses.elementAt(index).toString(), userDB);
+                                setState(() {});
+                              },
+                            ),
+                          ),
+                        );
+                      }
                     },
                   ),
                 ),
+
+//                SliverFixedExtentList(
+//                  itemExtent: 50.0,
+//                  delegate: SliverChildBuilderDelegate(
+//                        (BuildContext context, int index) {
+//                      if (index >= pendingCourses.length) return null;
+//                      return Card(
+//                        child: ListTile(
+//                          leading: CupertinoActivityIndicator(),
+//                          title: Text(pendingCourses.elementAt(index).toString()),
+//                        trailing: IconButton(icon: Icon(CupertinoIcons.clear_circled),
+//                                            color: CupertinoColors.systemRed,
+//                                            onPressed: (){_removeSearchingClass(pendingCourses.elementAt(index).toString(), userDB);}
+//                        ),
+//                        ),
+//                      );
+//                    },
+//                  ),
+//                ),
+
+
               ],
             ),
           );

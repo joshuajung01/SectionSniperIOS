@@ -12,9 +12,9 @@ import 'package:section_sniper/wrapper.dart';
 import 'Models/user.dart';
 
 void main(){
+  WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
-
   return runApp(MyApp());
 }
 

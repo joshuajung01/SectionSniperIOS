@@ -28,7 +28,7 @@ class HomeScreen extends StatelessWidget{
       List splitCourse = frag.split(" ");
       String d = splitCourse[0];
       int n = int.parse(splitCourse[1]);
-      int s = int.parse(splitCourse[1]);
+      int s = int.parse(splitCourse[2]);
       Course addingCourse = Course(d, n, s);
       openCourses.add(addingCourse);
     }
