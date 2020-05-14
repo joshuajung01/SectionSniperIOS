@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:section_sniper/Models/course.dart';
 import 'package:section_sniper/Models/user.dart';
@@ -37,8 +36,6 @@ class _HomeTabState extends State<HomeTab>{
                 onPressed: () {
                   userDB.addCurrentCourse(check);
                   userDB.removeOpenCourse(check);
-//                  currentCourses.add(Course(addingCourse.getDept(), addingCourse.getNum(), addingCourse.getSec()));
-//                  openCourses.removeAt(i);
                   Navigator.of(context).pop();
                   setState(() {});
                 },
@@ -68,7 +65,6 @@ class _HomeTabState extends State<HomeTab>{
                   child: Text('Yes'),
                   onPressed: () {
                     userDB.removeCurrentCourse(check);
-//                    currentCourses.removeAt(i);
                     Navigator.of(context).pop();
                     setState(() {});
                   },
@@ -79,78 +75,6 @@ class _HomeTabState extends State<HomeTab>{
         );
       }
 
-//  Future<void> _addOpenClassToCurrent(String check, openCourses, currentCourses){
-//    for(int i = 0; i < openCourses.length; i++){
-//      Course addingCourse = openCourses.elementAt(i);
-//      if(addingCourse.toString() == check){
-//        return showCupertinoDialog<void>(
-//            context: context,
-//            builder: (BuildContext context){
-//              return CupertinoAlertDialog(
-//                title: Text('Did you already sign-up for '+addingCourse.toString()+'?'),
-//                content: Text('The course will be moved to \n\'Current Courses\''),
-//                actions: <Widget>[
-//                  CupertinoDialogAction(
-//                    child: Text('No'),
-//                    onPressed: () {
-//                      Navigator.of(context).pop();
-//                      setState(() {});
-//                    },
-//                  ),
-//
-//                  CupertinoDialogAction(
-//                    child: Text('Yes'),
-//                    onPressed: () {
-//                      currentCourses.add(Course(addingCourse.getDept(), addingCourse.getNum(), addingCourse.getSec()));
-//                      openCourses.removeAt(i);
-//                      Navigator.of(context).pop();
-//                      setState(() {});
-//                    },
-//                  ),
-//                ],
-//              );
-//            }
-//          );
-//        }
-//      }
-//    }
-
-//  Future<void> _removeCurrentClass(String check, currentCourses) async{
-//    for(int i = 0; i < currentCourses.length; i++){
-//      Course removingCourse = currentCourses.elementAt(i);
-//      if(removingCourse.toString() == check){
-//        return showCupertinoDialog<void>(
-//            context: context,
-//            builder: (BuildContext context){
-//              return CupertinoAlertDialog(
-//                title: Text('Remove '+removingCourse.toString()+' from current courses?'),
-//                content: Text('You can add it back later'),
-//                actions: <Widget>[
-//                  CupertinoDialogAction(
-//                    child: Text('No'),
-//                    onPressed: () {
-//                      Navigator.of(context).pop();
-//                      setState(() {});
-//                    },
-//                  ),
-//
-//                  CupertinoDialogAction(
-//                    child: Text('Yes'),
-//                    onPressed: () {
-//                      currentCourses.removeAt(i);
-//                      Navigator.of(context).pop();
-//                      setState(() {});
-//                    },
-//                  ),
-//                ],
-//              );
-//            }
-//          );
-//        }
-//      }
-//    }
-
-
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<User>(context);
@@ -158,34 +82,6 @@ class _HomeTabState extends State<HomeTab>{
     List<Course> currentCourses = [];
 
     DatabaseService userDB = DatabaseService(uid: user.uid);
-
-//    smile.getOpenData().then((value){
-//      openCourses =  HomeScreen().convertStringToCourse(value);
-//      setState(() {});
-//      print(openCourses);
-//    });
-
-//    print(user.uid);
-//    smile.getOpenData().then((value){
-//      print(value[0]);
-//      prelimOpenCourses = value;
-//    });
-//
-//    print('1');
-//    print(prelimOpenCourses);
-
-//            FutureBuilder(
-//              future: smile.getOpenData(),
-//              builder: (context, snapshot){
-//                if(snapshot.connectionState == ConnectionState.done){
-//                  openCourses = HomeScreen().convertStringToCourse(snapshot.data);
-//                  return null;
-//                }
-//                else{
-//                  return CupertinoActivityIndicator();
-//                }
-//              },
-//            ),
 
     return FutureBuilder(
       future: Future.wait([userDB.getOpenData(), userDB.getCurrentData()]),
@@ -201,31 +97,29 @@ class _HomeTabState extends State<HomeTab>{
 
                 CupertinoSliverNavigationBar(
                   largeTitle: Text('Open Courses'),
-                  trailing: CupertinoButton(
-                    child: Align(
-                      alignment: Alignment.bottomRight,
-                      child: Icon(CupertinoIcons.refresh),
-                    ),
-                    onPressed: (){setState(() {});},
-                  ),
                 ),
-
 
                 SliverFixedExtentList(
                   itemExtent: 50.0,
                   delegate: SliverChildBuilderDelegate(
                         (BuildContext context, int index) {
                       if (index >= openCourses.length) return null;
-                      return Card(
-                        child: ListTile(
-                          leading: Icon(CupertinoIcons.check_mark_circled_solid,
-                            color: CupertinoColors.activeGreen,),
-                          title: Text(openCourses.elementAt(index).toString()),
-                          trailing: IconButton(icon: Icon(CupertinoIcons.add_circled),
-                            onPressed: (){_addOpenClassToCurrent(openCourses.elementAt(index).toString(), userDB);},
+                      else{
+                        return Card(
+                          child: ListTile(
+                            leading: Icon(CupertinoIcons.check_mark_circled_solid,
+                              color: CupertinoColors.activeGreen,),
+                            title: Text(openCourses.elementAt(index).toString()),
+                            trailing: IconButton(icon: Icon(CupertinoIcons.add_circled),
+                              onPressed: (){
+                                _addOpenClassToCurrent(openCourses.elementAt(index).toString(), userDB);
+                                setState(() {});
+                              },
+                            ),
                           ),
-                        ),
-                      );
+                        );
+                      }
+
                     },
                   ),
                 ),
@@ -239,16 +133,33 @@ class _HomeTabState extends State<HomeTab>{
                   itemExtent: 50.0,
                   delegate: SliverChildBuilderDelegate(
                         (BuildContext context, int index) {
-                      if (index >= currentCourses.length) return null;
-                      return Card(
-                        child: ListTile(
-                          leading: Icon(CupertinoIcons.check_mark_circled_solid,),
-                          title: Text(currentCourses.elementAt(index).toString()),
-                          trailing: IconButton(icon: Icon(CupertinoIcons.clear_circled),
-                            onPressed: (){_removeCurrentClass(currentCourses.elementAt(index).toString(), userDB);},
+                      if (index > currentCourses.length) return null;
+                      else if(index == currentCourses.length-1 || currentCourses.length == 0){
+                        return Card(
+                          child: ListTile(
+                            title: Center(
+                              child: CupertinoButton(
+                                child: Icon(CupertinoIcons.add_circled_solid),
+                                onPressed: null,
+                              ),
+                            ),
                           ),
-                        ),
-                      );
+                        );
+                      }
+                      else{
+                        return Card(
+                          child: ListTile(
+                            leading: Icon(CupertinoIcons.check_mark_circled_solid,),
+                            title: Text(currentCourses.elementAt(index).toString()),
+                            trailing: IconButton(icon: Icon(CupertinoIcons.clear_circled),
+                              onPressed: (){
+                              _removeCurrentClass(currentCourses.elementAt(index).toString(), userDB);
+                              setState(() {});
+                              },
+                            ),
+                          ),
+                        );
+                      }
                     },
                   ),
                 ),
@@ -263,75 +174,5 @@ class _HomeTabState extends State<HomeTab>{
         }
       },
     );
-
-//    return SafeArea(
-//      top: true,
-//        child: CustomScrollView(
-//          slivers: <Widget>[
-//
-//            CupertinoSliverNavigationBar(
-//              largeTitle: Text('Open Courses'),
-//            ),
-//
-//
-//            SliverFixedExtentList(
-//              itemExtent: 50.0,
-//              delegate: SliverChildBuilderDelegate(
-//                    (BuildContext context, int index) {
-//                  if (index >= openCourses.length) return null;
-//                    return Card(
-//                      child: ListTile(
-//                        leading: Icon(CupertinoIcons.check_mark_circled_solid,
-//                          color: CupertinoColors.activeGreen,),
-//                        title: Text(openCourses.elementAt(index).toString()),
-//                        trailing: IconButton(icon: Icon(CupertinoIcons.add_circled),
-//                          onPressed: (){_addOpenClassToCurrent(openCourses.elementAt(index).toString(), openCourses, currentCourses);},
-//                        ),
-//                      ),
-//                    );
-//                },
-//              ),
-//            ),
-
-
-//            FutureBuilder(
-//              future: smile.getOpenData(),
-//              builder: (context, snapshot){
-//                if(snapshot.connectionState == ConnectionState.done){
-//                  openCourses = HomeScreen().convertStringToCourse(snapshot.data);
-//                  return null;
-//                }
-//                else{
-//                  return CupertinoActivityIndicator();
-//                }
-//              },
-//            ),
-
-//            CupertinoSliverNavigationBar(
-//              largeTitle: Text('Current Courses'),
-//              transitionBetweenRoutes: true,
-//            ),
-//
-//            SliverFixedExtentList(
-//              itemExtent: 50.0,
-//              delegate: SliverChildBuilderDelegate(
-//                    (BuildContext context, int index) {
-//                  if (index >= currentCourses.length) return null;
-//                  return Card(
-//                    child: ListTile(
-//                      leading: Icon(CupertinoIcons.check_mark_circled_solid,),
-//                      title: Text(currentCourses.elementAt(index).toString()),
-//                      trailing: IconButton(icon: Icon(CupertinoIcons.clear_circled),
-//                        onPressed: (){_removeCurrentClass(currentCourses.elementAt(index).toString(), currentCourses);},
-//                      ),
-//                    ),
-//                  );
-//                },
-//              ),
-//            ),
-//
-//          ],
-//      ),
-//    );
   }
 }

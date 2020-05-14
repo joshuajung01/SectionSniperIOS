@@ -1,5 +1,4 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:section_sniper/Models/course.dart';
 import 'package:section_sniper/Models/user.dart';
 import 'package:section_sniper/Services/database.dart';
 
@@ -36,7 +35,7 @@ class AuthService {
       await result.user.sendEmailVerification();
       FirebaseUser user = result.user;
 
-      await DatabaseService(uid: user.uid).updateNewUserData(Course('RAND', 123, 123).toString());
+      await DatabaseService(uid: user.uid).updateNewUserData();
       return _userFromFirebaseUser(user);
     }
     catch(e){

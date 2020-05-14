@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:section_sniper/Models/course.dart';
 
 class DatabaseService{
 
@@ -10,12 +9,12 @@ class DatabaseService{
   //collection reference
   final CollectionReference courseCollection = Firestore.instance.collection('users');
 
-  Future updateNewUserData(String course) async{
+  Future updateNewUserData() async{
     return await courseCollection.document(uid).setData({
-      'Open': [course],
-      'Current': [course],
-      'Pending': [course],
-      'Recent' : [course],
+      'Open': ['OPEN 123 123'],
+      'Current': ['CURR 123 123'],
+      'Pending': ['PEND 123 123'],
+      'Recent' : ['RCNT 123 123'],
     });
   }
 
@@ -113,6 +112,11 @@ class DatabaseService{
   Future getCurrentData() async {
     var doc = await courseCollection.document(uid).get();
     return doc.data['Current'];
+  }
+
+  Future getPendingData() async {
+    var doc = await courseCollection.document(uid).get();
+    return doc.data['Pending'];
   }
 
 
