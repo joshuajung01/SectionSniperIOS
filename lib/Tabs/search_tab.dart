@@ -2,6 +2,8 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:section_sniper/Models/detailedCourse.dart';
 import 'package:http/http.dart' as http;
+import 'package:section_sniper/Services/loading.dart';
+import 'package:section_sniper/Tabs/searchResults.dart';
 
 class SearchTab extends StatefulWidget {
   @override
@@ -11,23 +13,7 @@ class SearchTab extends StatefulWidget {
 }
 
 class _SearchTabState extends State<SearchTab>{
-//  List<Course> recentSearchCourses = [
-//    Course('MATH', 308, 511),
-//    Course('STAT', 211, 504),
-//    Course('CSCE', 121, 501),
-//    Course('PHYS', 216, 202),
-//    Course('MATH', 304, 509),
-//    Course('CSCE', 181, 500),
-//  ];
-//
-//  List<Course> availibleCourses = [
-//    Course('MATH', 308, 511),
-//    Course('STAT', 211, 504),
-//    Course('CSCE', 121, 501),
-//    Course('PHYS', 216, 202),
-//    Course('MATH', 304, 509),
-//    Course('CSCE', 181, 500),
-//  ];
+  bool loading = false;
 
   String dept;
   String num;
@@ -36,11 +22,6 @@ class _SearchTabState extends State<SearchTab>{
 
   TextEditingController _deptField = TextEditingController();
   TextEditingController _numField = TextEditingController();
-
-//  Future<List> request_terms() async{
-//    final response = await http.get('https://compassxe-ssb.tamu.edu/StudentRegistrationSsb/ssb/classSearch/getTerms?dataType=json&offset=1&max=500');
-//    return json.decode(response.body);
-//  }
 
   Future requestSections(String depts, String nums) async{
     Map<String, String> headers = {};
@@ -69,7 +50,8 @@ class _SearchTabState extends State<SearchTab>{
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
+
+    return loading ? Loading() : SafeArea(
       top: true,
       bottom: true,
       child: Column(
@@ -144,26 +126,84 @@ class _SearchTabState extends State<SearchTab>{
                   child: CupertinoButton.filled(
                     child: Text('Search'),
                     onPressed: (){
+                      setState(() {loading = true;});
+                      List availibleClasses = [];
                       if(_deptField.text.isNotEmpty && _numField.text.isNotEmpty){
-                        List availibleClasses = [];
-                        requestSections(dept, num).then((value){
-                          List arr = findAllClasses(value, dept, num);
-                          for(int i = 0; i < arr.length; i++){
+                        requestSections(dept, num).then((value) {
+                          print(value);
+                          if (value['totalCount'] != 0) {
+                            List arr = findAllClasses(value, dept, num);
+                            for (int i = 0; i < arr.length; i++) {
+                              Map<dynamic, dynamic> c = arr[i];
+                              String d = c['subject'];
+                              String n = c['courseNumber'];
+                              String s = c['sequenceNumber'];
+                              int o = c['seatsAvailable'];
+                              String cr = c['courseReferenceNumber'];
+                              String t = c['courseTitle'];
+                              String pn = '';
+                              if (c['faculty'].length != 0) {
+                                pn = c['faculty'][0]['displayName'];
+                              }
+                              int mc = c['maximumEnrollment'];
 
-                            Map<dynamic, dynamic> c = arr[i];
-                            String d = c['subject'];
-                            String n = c['courseNumber'];
-                            String s = c['sequenceNumber'];
-                            int o = c['seatsAvailable'];
-                            String cr = c['courseReferenceNumber'];
+                              DetailedCourse smile = DetailedCourse(d, n, s, o, cr, t, pn, mc);
+                              availibleClasses.add(smile);
+                            }
+                            Navigator.push(
+                                context,
+                                CupertinoPageRoute(
+                                    builder: (context) =>
+                                        SearchResults(specificCourses: availibleClasses,)
+                                )
+                              );
+                              setState(() {loading = false;});
+                            }
+                          else{
+                            showCupertinoDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return CupertinoAlertDialog(
+                                    title: Text('Error'),
+                                    content: Text('Course not Found'),
+                                    actions: <Widget>[
+                                      CupertinoDialogAction(
+                                        child: Text('Ok'),
+                                        onPressed: () {
+                                          Navigator.of(context).pop();
+                                          setState(() {});
+                                        },
+                                      ),
+                                    ],
+                                  );
+                                }
+                              );
+                            setState(() {loading = false;});
+                            }
 
-                            DetailedCourse smile = DetailedCourse(d, n, s, o, cr,);
-                            availibleClasses.add(smile);
                           }
-                          print(availibleClasses);
-                        });
+                        );
                       }
-
+                      else{
+                        showCupertinoDialog<void>(
+                            context: context,
+                            builder: (BuildContext context){
+                              return CupertinoAlertDialog(
+                                title: Text('Uh-oh'),
+                                content: Text('Please make sure to fill out all information'),
+                                actions: <Widget>[
+                                  CupertinoDialogAction(
+                                    child: Text('Ok'),
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                      setState(() {});
+                                    },
+                                  ),
+                                ],
+                              );
+                            }
+                        );
+                      }
 
 
                     },
@@ -178,28 +218,3 @@ class _SearchTabState extends State<SearchTab>{
     );
   }
 }
-
-//class Session {
-////  Map<String, String> headers = {'code'};
-//
-//  Future<List<dynamic>> get(String url) async {
-//    http.Response response = await http.get(url);
-////    updateCookie(response);
-//    return json.decode(response.body);
-//  }
-//
-//  Future<Map> post(String url, dynamic data) async {
-//    http.Response response = await http.post(url, body: data);
-////    updateCookie(response);
-//    return json.decode(response.body);
-//  }
-//
-////  void updateCookie(http.Response response) {
-////    String rawCookie = response.headers['set-cookie'];
-////    if (rawCookie != null) {
-////      int index = rawCookie.indexOf(';');
-////      headers['cookie'] =
-////      (index == -1) ? rawCookie : rawCookie.substring(0, index);
-////    }
-////  }
-//}
