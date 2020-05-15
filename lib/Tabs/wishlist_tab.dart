@@ -99,7 +99,7 @@ class _WishlistTabState extends State<WishlistTab>{
                       else{
                         return Card(
                           child: ListTile(
-                            leading: Icon(CupertinoIcons.check_mark_circled_solid,),
+                            leading: CupertinoActivityIndicator(),
                             title: Text(pendingCourses.elementAt(index).toString()),
                             trailing: IconButton(icon: Icon(CupertinoIcons.clear_circled),
                               onPressed: (){
