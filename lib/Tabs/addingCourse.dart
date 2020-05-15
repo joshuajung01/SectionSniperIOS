@@ -201,7 +201,7 @@ class _AddingCourseState extends State<AddingCourse> {
       case 'Pending':
         return loading ? Loading() : CupertinoPageScaffold(
           navigationBar: CupertinoNavigationBar(
-            middle: Text('Add a Pending Course'),
+            middle: Text('Add a Wishlist Course'),
           ),
           child: SafeArea(
             top: true,

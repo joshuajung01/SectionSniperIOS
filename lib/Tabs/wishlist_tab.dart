@@ -74,7 +74,7 @@ class _WishlistTabState extends State<WishlistTab>{
               slivers: <Widget>[
 
                 CupertinoSliverNavigationBar(
-                  largeTitle: Text('Pending Courses',)
+                  largeTitle: Text('Wishlist Courses',)
                 ),
                 SliverFixedExtentList(
                   itemExtent: 50.0,
@@ -85,7 +85,7 @@ class _WishlistTabState extends State<WishlistTab>{
                         return Card(
                           child: ListTile(
                             leading:  Icon(CupertinoIcons.add_circled_solid),
-                            title: Text('Add Pending Course'),
+                            title: Text('Add Wishlist Course'),
                             onTap: (){
                               Navigator.push(
                                   context,
@@ -113,26 +113,6 @@ class _WishlistTabState extends State<WishlistTab>{
                     },
                   ),
                 ),
-
-//                SliverFixedExtentList(
-//                  itemExtent: 50.0,
-//                  delegate: SliverChildBuilderDelegate(
-//                        (BuildContext context, int index) {
-//                      if (index >= pendingCourses.length) return null;
-//                      return Card(
-//                        child: ListTile(
-//                          leading: CupertinoActivityIndicator(),
-//                          title: Text(pendingCourses.elementAt(index).toString()),
-//                        trailing: IconButton(icon: Icon(CupertinoIcons.clear_circled),
-//                                            color: CupertinoColors.systemRed,
-//                                            onPressed: (){_removeSearchingClass(pendingCourses.elementAt(index).toString(), userDB);}
-//                        ),
-//                        ),
-//                      );
-//                    },
-//                  ),
-//                ),
-
 
               ],
             ),
