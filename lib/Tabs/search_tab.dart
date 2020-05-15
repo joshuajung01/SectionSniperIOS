@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:section_sniper/Models/detailedCourse.dart';
-import '../Models/course.dart';
 import 'package:http/http.dart' as http;
 
 class SearchTab extends StatefulWidget {
@@ -43,7 +42,7 @@ class _SearchTabState extends State<SearchTab>{
 //    return json.decode(response.body);
 //  }
 
-  Future request_sections(String depts, String nums) async{
+  Future requestSections(String depts, String nums) async{
     Map<String, String> headers = {};
     String url = 'https://compassxe-ssb.tamu.edu/StudentRegistrationSsb/ssb/term/search?mode=courseSearch';
     var data = {'dataType': 'json', 'term': '202031'};
@@ -62,18 +61,9 @@ class _SearchTabState extends State<SearchTab>{
     return json.decode(response2.body);
   }
 
-  List find_all_classes(data, depts, nums) {
-    List arr = [];
-    List temp_arr = data["data"];
-    return temp_arr;
-//    for (var c_ass in temp_arr) {
-//      for (var key in c_ass) {
-//        if (key == 'openSection') {
-//          arr.add(dept + " " + nums + " " + c_ass["sequenceNumber"]);
-//        }
-//      }
-//    }
-//    return arr;
+  List findAllClasses(data, depts, nums) {
+    List arr = data["data"];
+    return arr;
   }
 
 
@@ -156,8 +146,8 @@ class _SearchTabState extends State<SearchTab>{
                     onPressed: (){
                       if(_deptField.text.isNotEmpty && _numField.text.isNotEmpty){
                         List availibleClasses = [];
-                        request_sections(dept, num).then((value){
-                          List arr = find_all_classes(value, dept, num);
+                        requestSections(dept, num).then((value){
+                          List arr = findAllClasses(value, dept, num);
                           for(int i = 0; i < arr.length; i++){
 
                             Map<dynamic, dynamic> c = arr[i];
@@ -167,7 +157,7 @@ class _SearchTabState extends State<SearchTab>{
                             int o = c['seatsAvailable'];
                             String cr = c['courseReferenceNumber'];
 
-                            detailedCourse smile = detailedCourse(d, n, s, o, cr,);
+                            DetailedCourse smile = DetailedCourse(d, n, s, o, cr,);
                             availibleClasses.add(smile);
                           }
                           print(availibleClasses);

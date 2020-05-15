@@ -5,15 +5,15 @@ import 'package:section_sniper/Models/user.dart';
 import 'package:section_sniper/Services/loading.dart';
 
 
-class addingCourse extends StatefulWidget {
+class AddingCourse extends StatefulWidget {
   final String category;
-  addingCourse({Key key, this.category}) : super(key: key);
+  AddingCourse({Key key, this.category}) : super(key: key);
 
   @override
-  _addingCourseState createState() => _addingCourseState();
+  _AddingCourseState createState() => _AddingCourseState();
 }
 
-class _addingCourseState extends State<addingCourse> {
+class _AddingCourseState extends State<AddingCourse> {
 
   TextEditingController _deptField = TextEditingController();
   TextEditingController _courseField = TextEditingController();

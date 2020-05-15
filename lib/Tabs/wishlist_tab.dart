@@ -91,7 +91,7 @@ class _WishlistTabState extends State<WishlistTab>{
                                   context,
                                   CupertinoPageRoute(
                                       builder: (context) =>
-                                          addingCourse(category: 'Pending')));
+                                          AddingCourse(category: 'Pending')));
                             },
                           ),
                         );

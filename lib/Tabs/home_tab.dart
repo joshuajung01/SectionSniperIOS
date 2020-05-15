@@ -146,7 +146,7 @@ class _HomeTabState extends State<HomeTab>{
                                   context,
                                   CupertinoPageRoute(
                                       builder: (context) =>
-                                          addingCourse(category: 'Current')));
+                                          AddingCourse(category: 'Current')));
                             },
                           ),
                         );

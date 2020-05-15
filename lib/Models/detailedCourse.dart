@@ -1,11 +1,11 @@
-class detailedCourse {
+class DetailedCourse {
   String dept;
   String num;
   String sec;
   int open;
   String crn;
 
-  detailedCourse(String d, String n, String s, int o, String c,){
+  DetailedCourse(String d, String n, String s, int o, String c,){
     this.dept = d;
     this.num = n;
     this.sec = s;
