@@ -309,7 +309,7 @@ class _AddingCourseState extends State<AddingCourse> {
                           setState(() {
                             loading = true;
                           });
-                          String addingCourse = dept + ' ' + course + ' ' + section;
+                          String addingCourse = dept.toUpperCase() + ' ' + course + ' ' + section;
 
                           dynamic result1 = await _usersDB.getPendingData();
                           await _usersDB.addPendingCourse(addingCourse);

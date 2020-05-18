@@ -171,7 +171,7 @@ class _SearchTabState extends State<SearchTab>{
                                         child: Text('Ok'),
                                         onPressed: () {
                                           Navigator.of(context).pop();
-                                          setState(() {});
+                                          setState(() {loading = false;});
                                         },
                                       ),
                                     ],
@@ -196,7 +196,7 @@ class _SearchTabState extends State<SearchTab>{
                                     child: Text('Ok'),
                                     onPressed: () {
                                       Navigator.of(context).pop();
-                                      setState(() {});
+                                      setState(() {loading = false;});
                                     },
                                   ),
                                 ],
