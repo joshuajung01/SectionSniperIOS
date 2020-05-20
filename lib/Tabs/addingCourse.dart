@@ -305,6 +305,7 @@ class _AddingCourseState extends State<AddingCourse> {
                           });
                         }
 
+
                         if (prelimInputValid) {
                           setState(() {
                             loading = true;
