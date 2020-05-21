@@ -37,6 +37,7 @@ class _SearchTabState extends State<SearchTab>{
       (index == -1) ? rawCookie : rawCookie.substring(0, index);
     }
 
+
     String url2 = 'https://compassxe-ssb.tamu.edu/StudentRegistrationSsb/ssb/searchResults/searchResults?txt_subjectcoursecombo='+ depts + nums +'&txt_term=202031&pageOffset=0&pageMaxSize=500&sortColumn=subjectDescription&sortDirection=asc';
     http.Response response2 = await http.get(url2, headers: headers);
     return json.decode(response2.body);
