@@ -31,6 +31,7 @@ class _SearchTabState extends State<SearchTab>{
     http.Response response = await http.post(url, body: data);
     String rawCookie = response.headers['set-cookie'];
 
+
     if (rawCookie != null) {
       int index = rawCookie.indexOf(';');
       headers['cookie'] =
@@ -134,7 +135,6 @@ class _SearchTabState extends State<SearchTab>{
                       List availibleClasses = [];
                       if(_deptField.text.isNotEmpty && _numField.text.isNotEmpty){
                         requestSections(dept, num).then((value) {
-                          print(value);
                           if (value['totalCount'] != 0) {
                             List arr = findAllClasses(value, dept, num);
                             for (int i = 0; i < arr.length; i++) {
@@ -163,6 +163,7 @@ class _SearchTabState extends State<SearchTab>{
                               );
                               setState(() {loading = false;});
                             }
+
                           else{
                             showCupertinoDialog(
                                 context: context,
