@@ -8,7 +8,6 @@ import 'Tabs/settings_tab.dart';
 import 'package:section_sniper/Services/database.dart';
 import 'package:provider/provider.dart';
 
-
 class SectionSniper extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
