@@ -1,9 +1,9 @@
 import 'dart:io';
-import 'package:flutter/cupertino.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
-class notificationService{
+class NotificationService{
   final FirebaseMessaging _fcm = FirebaseMessaging();
 
   Future initialise() async{
@@ -23,6 +23,27 @@ class notificationService{
       },
 
     );
+  }
+
+  saveDeviceToken() async{
+    FirebaseUser user = await auth.currentUser();
+
+    // Get the token for this device
+    String fcmToken = await _fcm.getToken();
+
+    // Save it to Firestore
+    if (fcmToken != null) {
+      var tokens = _db
+          .collection('users')
+          .document(uid)
+          .collection('tokens')
+          .document(fcmToken);
+
+      await tokens.setData({
+        'token': fcmToken,
+        'createdAt': FieldValue.serverTimestamp(), // optional
+        'platform': Platform.operatingSystem // optional
+      })
   }
 }
 
