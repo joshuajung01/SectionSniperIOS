@@ -2,12 +2,14 @@ import 'dart:io';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'database.dart';
 
 class NotificationService{
   final FirebaseMessaging _fcm = FirebaseMessaging();
+  bool _initialized = false;
 
   Future initialise() async{
-    if(Platform.isIOS){
+    if(Platform.isIOS && !_initialized){
       _fcm.requestNotificationPermissions(IosNotificationSettings());
     }
 
@@ -26,24 +28,17 @@ class NotificationService{
   }
 
   saveDeviceToken() async{
-    FirebaseUser user = await auth.currentUser();
+    final FirebaseAuth _auth = FirebaseAuth.instance;
+    FirebaseUser user = await _auth.currentUser();
 
+    String uid = user.uid;
     // Get the token for this device
     String fcmToken = await _fcm.getToken();
 
     // Save it to Firestore
     if (fcmToken != null) {
-      var tokens = _db
-          .collection('users')
-          .document(uid)
-          .collection('tokens')
-          .document(fcmToken);
-
-      await tokens.setData({
-        'token': fcmToken,
-        'createdAt': FieldValue.serverTimestamp(), // optional
-        'platform': Platform.operatingSystem // optional
-      })
+      DatabaseService()
+      await
   }
 }
 

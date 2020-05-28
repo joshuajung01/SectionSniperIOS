@@ -119,24 +119,10 @@ class DatabaseService{
     return doc.data['Pending'];
   }
 
-
-
-//  List<Course> getOpenCourse(Future doc){
-//
-//    List<Course> openCourses = [];
-//
-//    List arr = doc.data['Open'];
-//    for(String frag in arr){
-//      List splitCourse = frag.split(" ");
-//      String d = splitCourse[0];
-//      int n = int.parse(splitCourse[1]);
-//      int s = int.parse(splitCourse[1]);
-//      Course addingCourse = Course(d, n, s);
-//      openCourses.add(addingCourse);
-//    }
-//    return openCourses;
-//  }
-
+  Future setToken(String token) async{
+    return await courseCollection.document('{uid}/token').updateData({
+      'token' : token});
+  }
 
   //Get Data
   Stream<QuerySnapshot> get course{
