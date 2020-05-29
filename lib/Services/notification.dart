@@ -27,6 +27,7 @@ class NotificationService{
     );
   }
 
+
   saveDeviceToken() async{
     final FirebaseAuth _auth = FirebaseAuth.instance;
     FirebaseUser user = await _auth.currentUser();
