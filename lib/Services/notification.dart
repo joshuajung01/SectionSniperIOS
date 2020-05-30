@@ -20,6 +20,7 @@ class NotificationService{
       onLaunch: (Map<String, dynamic> message) async{
         print('onLaunch: $message');
       },
+
       onResume: (Map<String, dynamic> message) async{
         print('onResume: $message');
       },
