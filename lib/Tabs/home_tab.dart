@@ -90,7 +90,6 @@ class _HomeTabState extends State<HomeTab>{
         if(snapshot.connectionState == ConnectionState.done){
           openCourses = HomeScreen().convertStringToCourse(snapshot.data[0]);
           currentCourses = HomeScreen().convertStringToCourse(snapshot.data[1]);
-
           return SafeArea(
             top: true,
             child: CustomScrollView(

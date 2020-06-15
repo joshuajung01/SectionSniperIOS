@@ -12,7 +12,6 @@ import 'package:provider/provider.dart';
 class SectionSniper extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    MessageHandler();
     return  StreamProvider<QuerySnapshot>.value(
         value: DatabaseService().course,
         child: HomeScreen());
@@ -20,7 +19,6 @@ class SectionSniper extends StatelessWidget {
 }
 
 class HomeScreen extends StatelessWidget{
-
   List<Course> convertStringToCourse(arr){
 
     List<Course> openCourses = [];
@@ -39,6 +37,8 @@ class HomeScreen extends StatelessWidget{
 
   @override
   Widget build(BuildContext context){
+    PushNotificationsManager().init();
+
     return CupertinoTabScaffold(
       tabBar: CupertinoTabBar(
         items: [

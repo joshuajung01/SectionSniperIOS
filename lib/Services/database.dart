@@ -15,6 +15,7 @@ class DatabaseService{
       'Current': ['CURR 123 123'],
       'Pending': ['PEND 123 123'],
       'Recent' : ['RCNT 123 123'],
+      'Token' : 'token'
     });
   }
 
@@ -77,6 +78,7 @@ class DatabaseService{
       'Current': [],
       'Pending': [],
       'Recent' : [],
+      'Token' : ''
     });
   }
 
@@ -102,6 +104,10 @@ class DatabaseService{
       'Recent': FieldValue.arrayRemove([course])});
   }
 
+  Future setToken(String token) async{
+    return await courseCollection.document(uid).updateData({
+      'Token' : token});
+  }
 
   //Get data
   Future getOpenData() async {
@@ -119,10 +125,11 @@ class DatabaseService{
     return doc.data['Pending'];
   }
 
-  Future setToken(String token) async{
-    return await courseCollection.document('{uid}/token').updateData({
-      'token' : token});
+  Future getAllData() async {
+    var doc = await courseCollection.document(uid).get();
+    return doc.data;
   }
+
 
   //Get Data
   Stream<QuerySnapshot> get course{
