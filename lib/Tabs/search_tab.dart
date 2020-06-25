@@ -1,7 +1,10 @@
 import 'dart:convert';
 import 'package:flutter/cupertino.dart';
+import 'package:provider/provider.dart';
 import 'package:section_sniper/Models/detailedCourse.dart';
 import 'package:http/http.dart' as http;
+import 'package:section_sniper/Models/user.dart';
+import 'package:section_sniper/Services/database.dart';
 import 'package:section_sniper/Services/loading.dart';
 import 'package:section_sniper/Tabs/searchResults.dart';
 
@@ -22,6 +25,9 @@ class _SearchTabState extends State<SearchTab>{
 
   TextEditingController _deptField = TextEditingController();
   TextEditingController _numField = TextEditingController();
+
+
+  List<dynamic> orgPendingData = [];
 
   Future requestSections(String depts, String nums) async{
     Map<String, String> headers = {};
@@ -52,10 +58,17 @@ class _SearchTabState extends State<SearchTab>{
     return arr;
   }
 
+  Future<List> getCurrentPendingData() async {
+    List pendingData = [];
+    final users = Provider.of<User>(context);
+    DatabaseService _usersDB = DatabaseService(uid: users.uid);
+    pendingData = await _usersDB.getPendingData();
+    return pendingData;
+  }
 
   @override
   Widget build(BuildContext context) {
-
+    getCurrentPendingData().then((value) => orgPendingData = value);
     return loading ? Loading() : SafeArea(
       top: true,
       bottom: true,
@@ -138,6 +151,7 @@ class _SearchTabState extends State<SearchTab>{
                           if (value['totalCount'] != 0) {
                             List arr = findAllClasses(value, dept, num);
                             for (int i = 0; i < arr.length; i++) {
+                              bool selected = false;
                               Map<dynamic, dynamic> c = arr[i];
                               String d = c['subject'];
                               String n = c['courseNumber'];
@@ -151,7 +165,11 @@ class _SearchTabState extends State<SearchTab>{
                               }
                               int mc = c['maximumEnrollment'];
 
-                              DetailedCourse smile = DetailedCourse(d, n, s, o, cr, t, pn, mc);
+                              String className = d + " " + n + " " + s;
+                              if(orgPendingData.contains(className)){
+                                selected = true;
+                              }
+                              DetailedCourse smile = DetailedCourse(d, n, s, o, cr, t, pn, mc, selected);
                               availibleClasses.add(smile);
                             }
                             Navigator.push(

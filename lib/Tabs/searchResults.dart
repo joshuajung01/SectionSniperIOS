@@ -14,13 +14,13 @@ class SearchResults extends StatefulWidget {
 }
 
 class _SearchResultsState extends State<SearchResults> {
+  Icon addIcon = Icon(CupertinoIcons.add_circled);
   @override
   Widget build(BuildContext context) {
       final users = Provider.of<User>(context);
       DatabaseService _usersDB = DatabaseService(uid: users.uid);
-
       List<dynamic> allCourses = widget.specificCourses;
-      
+
       return SafeArea(
         top: true,
         child: CustomScrollView(
@@ -37,61 +37,34 @@ class _SearchResultsState extends State<SearchResults> {
                     (BuildContext context, int index) {
                   if (index >= allCourses.length) return null;
                   else{
+                    DetailedCourse course = allCourses.elementAt(index);
+                    if(!course.selected){
+                      addIcon = Icon(CupertinoIcons.add_circled);
+                    }
+                    else{
+                      addIcon = Icon(CupertinoIcons.check_mark_circled_solid);
+                    }
+
                     if(allCourses.elementAt(index).open > 0){
-                      DetailedCourse course = allCourses.elementAt(index);
                       return Card(
                         child: ListTile(
                           leading: Icon(CupertinoIcons.check_mark_circled_solid,
                             color: CupertinoColors.activeGreen,),
                           title: Text(allCourses.elementAt(index).toString()),
-                          trailing: IconButton(icon: Icon(CupertinoIcons.add_circled),
+                          trailing: IconButton(icon: addIcon,
                             onPressed: (){
                               setState(() {
-                                showCupertinoDialog(
-                                    context: context,
-                                    builder: (BuildContext context){
-                                    return CupertinoAlertDialog(
-                                      title: Text('Confirmation'),
-                                      content: Text('Add '+course.toString()+' to Wishlist?'),
-                                      actions: <Widget>[
-                                        CupertinoDialogAction(
-                                          child: Text('No'),
-                                          onPressed: () {
-                                            Navigator.of(context).pop();
-                                            setState(() {});
-                                          },
-                                        ),
+                                if(course.selected){
+                                  addIcon = Icon(CupertinoIcons.add_circled);
+                                  _usersDB.removePendingCourse(course.toString());
+                                  course.reverseSelected();
+                                }
+                                else{
+                                  addIcon = Icon(CupertinoIcons.check_mark_circled_solid);
+                                  _usersDB.addPendingCourse(course.toString());
+                                  course.reverseSelected();
+                                }
 
-                                        CupertinoDialogAction(
-                                          child: Text('Yes'),
-                                          onPressed: () {
-                                            _usersDB.addPendingCourse(course.toString());
-                                            Navigator.of(context).pop();
-                                            setState(() {
-                                              showCupertinoDialog(
-                                                  context: context,
-                                                  builder: (BuildContext context){
-                                                  return CupertinoAlertDialog(
-                                                    title: Text('Sucess'),
-                                                    content: Text(course.toString()+' was added to the Wishlist'),
-                                                    actions: <Widget>[
-                                                      CupertinoDialogAction(
-                                                        child: Text('Ok'),
-                                                        onPressed: () {
-                                                          Navigator.of(context).pop();
-                                                          setState(() {});
-                                                        },
-                                                      ),
-                                                    ],
-                                                  );
-                                              });
-                                            });
-                                          },
-                                        ),
-                                      ],
-                                    );
-                                  }
-                                );
                               });
                             },
                           ),
@@ -132,60 +105,25 @@ class _SearchResultsState extends State<SearchResults> {
                     }
 
                     else {
-                      DetailedCourse course = allCourses.elementAt(index);
                       return Card(
                         child: ListTile(
                           leading: Icon(CupertinoIcons.clear_circled_solid,
                             color: CupertinoColors.systemRed,),
                           title: Text(allCourses.elementAt(index).toString()),
-                          trailing: IconButton(icon: Icon(CupertinoIcons.add_circled),
+                          trailing: IconButton(icon: addIcon,
                             onPressed: (){
                               setState(() {
-                                showCupertinoDialog(
-                                    context: context,
-                                    builder: (BuildContext context){
-                                      return CupertinoAlertDialog(
-                                        title: Text('Confirmation'),
-                                        content: Text('Add '+allCourses.elementAt(index).toString()+' to Wishlist?'),
-                                        actions: <Widget>[
-                                          CupertinoDialogAction(
-                                            child: Text('No'),
-                                            onPressed: () {
-                                              Navigator.of(context).pop();
-                                              setState(() {});
-                                            },
-                                          ),
+                                if(course.selected){
+                                  addIcon = Icon(CupertinoIcons.add_circled);
+                                  _usersDB.removePendingCourse(course.toString());
+                                  course.reverseSelected();
+                                }
+                                else{
+                                  addIcon = Icon(CupertinoIcons.check_mark_circled_solid);
+                                  _usersDB.addPendingCourse(course.toString());
+                                  course.reverseSelected();
+                                }
 
-                                          CupertinoDialogAction(
-                                            child: Text('Yes'),
-                                            onPressed: () {
-                                              _usersDB.addPendingCourse(allCourses.elementAt(index).toString());
-                                              Navigator.of(context).pop();
-                                              setState(() {
-                                                showCupertinoDialog(
-                                                    context: context,
-                                                    builder: (BuildContext context){
-                                                      return CupertinoAlertDialog(
-                                                        title: Text('Sucess'),
-                                                        content: Text(allCourses.elementAt(index).toString()+' was added to the Wishlist'),
-                                                        actions: <Widget>[
-                                                          CupertinoDialogAction(
-                                                            child: Text('Ok'),
-                                                            onPressed: () {
-                                                              Navigator.of(context).pop();
-                                                              setState(() {});
-                                                            },
-                                                          ),
-                                                        ],
-                                                      );
-                                                    });
-                                              });
-                                            },
-                                          ),
-                                        ],
-                                      );
-                                    }
-                                  );
                                 });
                               },
                             ),
