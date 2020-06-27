@@ -5,6 +5,7 @@ Joshua Jung
  */
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:section_sniper/Services/auth.dart';
@@ -25,6 +26,10 @@ class MyApp extends StatelessWidget {
         value: AuthService().user,
         child: CupertinoApp(
           home: Wrapper(),
+          theme: CupertinoThemeData(
+            primaryColor: Color.fromRGBO(80, 0, 0, 1),
+            primaryContrastingColor: Colors.grey[300],
+          ),
         ),
     );
   }

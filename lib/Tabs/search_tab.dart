@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:section_sniper/Models/detailedCourse.dart';
 import 'package:http/http.dart' as http;
@@ -69,177 +70,218 @@ class _SearchTabState extends State<SearchTab>{
   @override
   Widget build(BuildContext context) {
     getCurrentPendingData().then((value) => orgPendingData = value);
-    return loading ? Loading() : SafeArea(
-      top: true,
-      bottom: true,
-      child: Column(
-        children: <Widget>[
-          CupertinoNavigationBar(
-            middle: Text('Search'),
-          ),
+    return loading ? Loading() : CupertinoPageScaffold(
+      navigationBar: CupertinoNavigationBar(
+        middle: Text('Search'),
+      ),
+      child: SafeArea(
+        top: true,
+        bottom: true,
+        child: Column(
+          children: <Widget>[
 
-          Container(padding: EdgeInsets.all(20.0)),
-
-          Expanded(
-              flex: 2,
-              child: Row(
-                children: <Widget>[
-                  Container(padding: EdgeInsets.all(8.0)),
-                  Container(
-                    constraints: BoxConstraints(maxWidth: 100),
-                    child: Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text('Department:'),
-                    ),
-                  ),
-                  Container(padding: EdgeInsets.all(8.0)),
-                  Expanded(
-                      child: Form(
-                        child: CupertinoTextField(
-                          placeholder: 'Ex: MATH',
-                          controller: _deptField,
-                          onChanged: (text){dept = text.toUpperCase();},
-                        ),
-                      )
-                  ),
-                  Container(padding: EdgeInsets.all(8.0)),
-                ],
-              ),
-          ),
-
-
-          Expanded(
-              flex: 2,
-              child: Row(
-                children: <Widget>[
-                  Container(padding: EdgeInsets.all(8.0)),
-                  Container(
-                    constraints: BoxConstraints(maxWidth: 100),
-                    child: Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text('Course Num: '),
-                    ),
-                  ),
-                  Container(padding: EdgeInsets.all(8.0)),
-                  Expanded(
-                      child: Form(
-                        child: CupertinoTextField(
-                          placeholder: 'Ex: 151',
-                          controller: _numField,
-                          onChanged: (text){num = text;},
-                        ),
-                      )
-                  ),
-                  Container(padding: EdgeInsets.all(8.0)),
-                ],
-              ),
-          ),
-
-          Expanded(
-            flex: 8,
-            child: Row(
-              children: <Widget>[
-                Expanded(child:
-                Center(
-                  child: CupertinoButton.filled(
-                    child: Text('Search'),
-                    onPressed: (){
-                      setState(() {loading = true;});
-                      List availibleClasses = [];
-                      if(_deptField.text.isNotEmpty && _numField.text.isNotEmpty){
-                        requestSections(dept, num).then((value) {
-                          if (value['totalCount'] != 0) {
-                            List arr = findAllClasses(value, dept, num);
-                            for (int i = 0; i < arr.length; i++) {
-                              bool selected = false;
-                              Map<dynamic, dynamic> c = arr[i];
-                              String d = c['subject'];
-                              String n = c['courseNumber'];
-                              String s = c['sequenceNumber'];
-                              int o = c['seatsAvailable'];
-                              String cr = c['courseReferenceNumber'];
-                              String t = c['courseTitle'];
-                              String pn = '';
-                              if (c['faculty'].length != 0) {
-                                pn = c['faculty'][0]['displayName'];
-                              }
-                              int mc = c['maximumEnrollment'];
-
-                              String className = d + " " + n + " " + s;
-                              if(orgPendingData.contains(className)){
-                                selected = true;
-                              }
-                              DetailedCourse smile = DetailedCourse(d, n, s, o, cr, t, pn, mc, selected);
-                              availibleClasses.add(smile);
-                            }
-                            Navigator.push(
-                                context,
-                                CupertinoPageRoute(
-                                    builder: (context) =>
-                                        SearchResults(specificCourses: availibleClasses,)
-                                )
-                              );
-                              setState(() {loading = false;});
-                            }
-
-
-
-                          else{
-                            showCupertinoDialog(
-                                context: context,
-                                builder: (BuildContext context) {
-                                  return CupertinoAlertDialog(
-                                    title: Text('Error'),
-                                    content: Text('Course not Found'),
-                                    actions: <Widget>[
-                                      CupertinoDialogAction(
-                                        child: Text('Ok'),
-                                        onPressed: () {
-                                          Navigator.of(context).pop();
-                                          setState(() {loading = false;});
-                                        },
-                                      ),
-                                    ],
-                                  );
-                                }
-                              );
-                            setState(() {loading = false;});
-                            }
-
-                          }
-                        );
-                      }
-                      else{
-                        showCupertinoDialog<void>(
-                            context: context,
-                            builder: (BuildContext context){
-                              return CupertinoAlertDialog(
-                                title: Text('Uh-oh'),
-                                content: Text('Please make sure to fill out all information'),
-                                actions: <Widget>[
-                                  CupertinoDialogAction(
-                                    child: Text('Ok'),
-                                    onPressed: () {
-                                      Navigator.of(context).pop();
-                                      setState(() {loading = false;});
-                                    },
-                                  ),
-                                ],
-                              );
-                            }
-                        );
-                      }
-
-
-                    },
-                  ),
-                )
-                )
-              ],
+            Expanded(
+              flex: 1,
+              child: Container(),
             ),
-          )
-        ],
-      )
+
+            Expanded(
+              flex: 8,
+              child: Padding(
+                padding: EdgeInsets.all(10),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(30.0),
+                  child: Container(
+                    padding: EdgeInsets.all(20.0),
+                    color: Colors.grey[400],
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(30.0),
+                      child: Container(
+                        color: Colors.grey[300],
+                        child: Column(
+                          children: <Widget>[
+                            Expanded(
+                              flex: 1,
+                              child: Container(),
+                            ),
+
+                            Expanded(
+                              flex: 3,
+                              child: Row(
+                                children: <Widget>[
+                                  Container(padding: EdgeInsets.all(8.0)),
+                                  Container(
+                                    constraints: BoxConstraints(maxWidth: 100),
+                                     child: Align(
+                                      alignment: Alignment.centerLeft,
+                                      child: Text('Department:'),
+                                    ),
+                                  ),
+                                  Container(padding: EdgeInsets.all(8.0)),
+                                  Expanded(
+                                      child: Form(
+                                        child: CupertinoTextField(
+                                          placeholder: 'Ex: MATH',
+                                          controller: _deptField,
+                                          onChanged: (text){dept = text.toUpperCase();},
+                                        ),
+                                      )
+                                  ),
+                                  Container(padding: EdgeInsets.all(8.0)),
+                                ],
+                              ),
+                            ),
+
+
+                            Expanded(
+                              flex: 3,
+                              child: Row(
+                                children: <Widget>[
+                                  Container(padding: EdgeInsets.all(8.0)),
+                                  Container(
+                                    constraints: BoxConstraints(maxWidth: 100),
+                                    child: Align(
+                                      alignment: Alignment.centerLeft,
+                                      child: Text('Course Num: '),
+                                    ),
+                                  ),
+                                  Container(padding: EdgeInsets.all(8.0)),
+                                  Expanded(
+                                      child: Form(
+                                        child: CupertinoTextField(
+                                          placeholder: 'Ex: 151',
+                                          controller: _numField,
+                                          onChanged: (text){num = text;},
+                                        ),
+                                      )
+                                  ),
+                                  Container(padding: EdgeInsets.all(8.0)),
+                                ],
+                              ),
+                            ),
+
+                            Expanded(
+                              flex: 2,
+                              child: Container(),
+                            ),
+
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+
+
+            Expanded(
+              flex: 3,
+              child: Row(
+                children: <Widget>[
+                  Expanded(child:
+                  Center(
+                    child: CupertinoButton(
+                      color: Color.fromRGBO(80, 0, 0, 1),
+                      child: Text('Search'),
+                      onPressed: (){
+                        setState(() {loading = true;});
+                        List availibleClasses = [];
+                        if(_deptField.text.isNotEmpty && _numField.text.isNotEmpty){
+                          requestSections(dept, num).then((value) {
+                            if (value['totalCount'] != 0) {
+                              List arr = findAllClasses(value, dept, num);
+                              for (int i = 0; i < arr.length; i++) {
+                                bool selected = false;
+                                Map<dynamic, dynamic> c = arr[i];
+                                String d = c['subject'];
+                                String n = c['courseNumber'];
+                                String s = c['sequenceNumber'];
+                                int o = c['seatsAvailable'];
+                                String cr = c['courseReferenceNumber'];
+                                String t = c['courseTitle'];
+                                String pn = '';
+                                if (c['faculty'].length != 0) {
+                                  pn = c['faculty'][0]['displayName'];
+                                }
+                                int mc = c['maximumEnrollment'];
+
+                                String className = d + " " + n + " " + s;
+                                if(orgPendingData.contains(className)){
+                                  selected = true;
+                                }
+                                DetailedCourse smile = DetailedCourse(d, n, s, o, cr, t, pn, mc, selected);
+                                availibleClasses.add(smile);
+                              }
+                              Navigator.push(
+                                  context,
+                                  CupertinoPageRoute(
+                                      builder: (context) =>
+                                          SearchResults(specificCourses: availibleClasses,)
+                                  )
+                                );
+                                setState(() {loading = false;});
+                              }
+
+
+
+                            else{
+                              showCupertinoDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return CupertinoAlertDialog(
+                                      title: Text('Error'),
+                                      content: Text('Course not Found'),
+                                      actions: <Widget>[
+                                        CupertinoDialogAction(
+                                          child: Text('Ok'),
+                                          onPressed: () {
+                                            Navigator.of(context).pop();
+                                            setState(() {loading = false;});
+                                          },
+                                        ),
+                                      ],
+                                    );
+                                  }
+                                );
+                              setState(() {loading = false;});
+                              }
+
+                            }
+                          );
+                        }
+                        else{
+                          showCupertinoDialog<void>(
+                              context: context,
+                              builder: (BuildContext context){
+                                return CupertinoAlertDialog(
+                                  title: Text('Uh-oh'),
+                                  content: Text('Please make sure to fill out all information'),
+                                  actions: <Widget>[
+                                    CupertinoDialogAction(
+                                      child: Text('Ok'),
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                        setState(() {loading = false;});
+                                      },
+                                    ),
+                                  ],
+                                );
+                              }
+                          );
+                        }
+
+
+                      },
+                    ),
+                  )
+                  )
+                ],
+              ),
+            )
+          ],
+        )
+      ),
     );
   }
 }

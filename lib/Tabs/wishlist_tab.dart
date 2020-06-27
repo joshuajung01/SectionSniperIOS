@@ -16,57 +16,21 @@ class WishlistTab extends StatefulWidget {
 }
 
 class _WishlistTabState extends State<WishlistTab>{
-//  List<Course> searchingCourses = [
-//    Course('MATH', 308, 511),
-//    Course('STAT', 211, 504),
-//    Course('CSCE', 121, 501),
-//    Course('PHYS', 216, 202),
-//    Course('MATH', 304, 509),
-//    Course('CSCE', 181, 500),
-//  ];
-
-  Future<void> _removePendingClass(String check, DatabaseService userDB) async{
-    return showCupertinoDialog<void>(
-        context: context,
-        builder: (BuildContext context){
-          return CupertinoAlertDialog(
-            title: Text('Stop searching for \n'+check+'?'),
-            content: Text('You can add it back later'),
-            actions: <Widget>[
-              CupertinoDialogAction(
-                child: Text('No'),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                  setState(() {});
-                },
-              ),
-
-              CupertinoDialogAction(
-                child: Text('Yes'),
-                onPressed: () {
-                  userDB.removePendingCourse(check);
-                  Navigator.of(context).pop();
-                  setState(() {});
-                },
-              ),
-            ],
-          );
-        }
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<User>(context);
     List<Course> pendingCourses = [];
+    List<Course> recentCourses = [];
 
     DatabaseService userDB = DatabaseService(uid: user.uid);
 
     return FutureBuilder(
-      future: userDB.getPendingData(),
+      future: Future.wait([userDB.getPendingData(), userDB.getRecentData()]),
       builder: (context, snapshot){
         if(snapshot.connectionState == ConnectionState.done){
-          pendingCourses = HomeScreen().convertStringToCourse(snapshot.data);
+          pendingCourses = HomeScreen().convertStringToCourse(snapshot.data[0]);
+          recentCourses = HomeScreen().convertStringToCourse(snapshot.data[1]);
+          List<Course> reversedRecentCourses = recentCourses.reversed.toList();
 
           return SafeArea(
             top: true,
@@ -74,8 +38,10 @@ class _WishlistTabState extends State<WishlistTab>{
               slivers: <Widget>[
 
                 CupertinoSliverNavigationBar(
-                  largeTitle: Text('Wishlist Courses',)
+                  largeTitle: Text('Wishlist Courses',),
+                  heroTag: 'Wishlist Title',
                 ),
+
                 SliverFixedExtentList(
                   itemExtent: 50.0,
                   delegate: SliverChildBuilderDelegate(
@@ -103,7 +69,48 @@ class _WishlistTabState extends State<WishlistTab>{
                             title: Text(pendingCourses.elementAt(index).toString()),
                             trailing: IconButton(icon: Icon(CupertinoIcons.clear_circled),
                               onPressed: (){
-                                _removePendingClass(pendingCourses.elementAt(index).toString(), userDB);
+                                userDB.removePendingCourse(pendingCourses.elementAt(index).toString());
+                                if(recentCourses.length > 10){
+                                  userDB.removeRecentCourse(recentCourses.elementAt(0).toString());
+                                }
+                                userDB.addRecentCourse(pendingCourses.elementAt(index).toString());
+                                setState(() {});
+                              },
+                            ),
+                          ),
+                        );
+                      }
+                    },
+                  ),
+                ),
+
+                CupertinoSliverNavigationBar(
+                  largeTitle: Text('Recent Courses',),
+                  heroTag: 'Recent Title',
+                ),
+
+                SliverFixedExtentList(
+                  itemExtent: 50.0,
+                  delegate: SliverChildBuilderDelegate(
+                        (BuildContext context, int index) {
+                      if (index >= reversedRecentCourses.length && index != 0) return null;
+                      else if(reversedRecentCourses.length == 0){
+                        return Card(
+                          child: ListTile(
+                            leading: Icon(CupertinoIcons.time),
+                            title: Text('No Recent Courses'),
+                          ),
+                        );
+                      }
+                      else{
+                        return Card(
+                          child: ListTile(
+                            leading: Icon(CupertinoIcons.time),
+                            title: Text(reversedRecentCourses.elementAt(index).toString()),
+                            trailing: IconButton(icon: Icon(CupertinoIcons.add_circled),
+                              onPressed: (){
+                                userDB.removeRecentCourse(reversedRecentCourses.elementAt(index).toString());
+                                userDB.addPendingCourse(reversedRecentCourses.elementAt(index).toString());
                                 setState(() {});
                               },
                             ),

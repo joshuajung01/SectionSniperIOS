@@ -13,7 +13,7 @@ class DatabaseService{
     return await courseCollection.document(uid).setData({
       'Open': ['OPEN 123 123'],
       'Current': ['CURR 123 123'],
-      'Pending': ['PEND 123 123'],
+      'Pending': ['WAIT 123 123'],
       'Recent' : ['RCNT 123 123'],
       'Token' : 'token'
     });
@@ -123,6 +123,11 @@ class DatabaseService{
   Future getPendingData() async {
     var doc = await courseCollection.document(uid).get();
     return doc.data['Pending'];
+  }
+
+  Future getRecentData() async {
+    var doc = await courseCollection.document(uid).get();
+    return doc.data['Recent'];
   }
 
   Future getAllData() async {

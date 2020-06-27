@@ -16,80 +16,23 @@ class HomeTab extends StatefulWidget {
 }
 
 class _HomeTabState extends State<HomeTab>{
-  Future<void> _addOpenClassToCurrent(String check, DatabaseService userDB){
-    return showCupertinoDialog<void>(
-        context: context,
-        builder: (BuildContext context){
-          return CupertinoAlertDialog(
-            title: Text('Did you already sign-up for '+check+'?'),
-            content: Text('The course will be moved to \n\'Current Courses\''),
-            actions: <Widget>[
-              CupertinoDialogAction(
-                child: Text('No'),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                  setState(() {});
-                },
-              ),
-
-              CupertinoDialogAction(
-                child: Text('Yes'),
-                onPressed: () {
-                  userDB.addCurrentCourse(check);
-                  userDB.removeOpenCourse(check);
-                  Navigator.of(context).pop();
-                  setState(() {});
-                },
-              ),
-            ],
-          );
-        }
-      );
-    }
-    Future<void> _removeCurrentClass(String check, DatabaseService userDB) async{
-      return showCupertinoDialog<void>(
-          context: context,
-          builder: (BuildContext context){
-            return CupertinoAlertDialog(
-              title: Text('Remove '+check+' from current courses?'),
-              content: Text('You can add it back later'),
-              actions: <Widget>[
-                CupertinoDialogAction(
-                  child: Text('No'),
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                    setState(() {});
-                  },
-                ),
-
-                CupertinoDialogAction(
-                  child: Text('Yes'),
-                  onPressed: () {
-                    userDB.removeCurrentCourse(check);
-                    Navigator.of(context).pop();
-                    setState(() {});
-                  },
-                ),
-              ],
-            );
-          }
-        );
-      }
-
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<User>(context);
     List<Course> openCourses = [];
     List<Course> currentCourses = [];
+    List<Course> recentCourses = [];
 
     DatabaseService userDB = DatabaseService(uid: user.uid);
 
     return FutureBuilder(
-      future: Future.wait([userDB.getOpenData(), userDB.getCurrentData()]),
+      future: Future.wait([userDB.getOpenData(), userDB.getCurrentData(), userDB.getRecentData()]),
       builder: (context, AsyncSnapshot<List<dynamic>> snapshot){
         if(snapshot.connectionState == ConnectionState.done){
           openCourses = HomeScreen().convertStringToCourse(snapshot.data[0]);
           currentCourses = HomeScreen().convertStringToCourse(snapshot.data[1]);
+          recentCourses = HomeScreen().convertStringToCourse(snapshot.data[2]);
+
           return SafeArea(
             top: true,
             child: CustomScrollView(
@@ -113,7 +56,9 @@ class _HomeTabState extends State<HomeTab>{
                             title: Text(openCourses.elementAt(index).toString()),
                             trailing: IconButton(icon: Icon(CupertinoIcons.add_circled),
                               onPressed: (){
-                                _addOpenClassToCurrent(openCourses.elementAt(index).toString(), userDB);
+                                String check = openCourses.elementAt(index).toString();
+                                userDB.addCurrentCourse(check);
+                                userDB.removeOpenCourse(check);
                                 setState(() {});
                               },
                             ),
@@ -157,7 +102,12 @@ class _HomeTabState extends State<HomeTab>{
                             title: Text(currentCourses.elementAt(index).toString()),
                             trailing: IconButton(icon: Icon(CupertinoIcons.clear_circled),
                               onPressed: (){
-                              _removeCurrentClass(currentCourses.elementAt(index).toString(), userDB);
+                              String check = currentCourses.elementAt(index).toString();
+                              userDB.removeCurrentCourse(check);
+                              if(recentCourses.length >= 10){
+                                userDB.removeRecentCourse(recentCourses.elementAt(0).toString());
+                              }
+                              userDB.addRecentCourse(check);
                               setState(() {});
                               },
                             ),
