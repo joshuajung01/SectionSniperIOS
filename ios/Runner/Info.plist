@@ -11,7 +11,7 @@
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
-	<string>section_sniper_1</string>
+	<string>SectionSniper</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
@@ -19,9 +19,27 @@
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>$(FLUTTER_BUILD_NUMBER)</string>
+	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSAppleMusicUsageDescription</key>
+	<string>Access to Media Allows more smiles</string>
+	<key>NSCalendarsUsageDescription</key>
+	<string>Access to calendars help people schedule their courses</string>
+	<key>NSContactsUsageDescription</key>
+	<string>Access to contacts helps the users connect</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>Access to location helps people smile</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>Access to location makes people smile</string>
+	<key>NSLocationUsageDescription</key>
+	<string>Access to location makes people smile</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Access to location makes people smile</string>
+	<key>NSMotionUsageDescription</key>
+	<string>Access to motion helps people feel happier</string>
+	<key>NSSpeechRecognitionUsageDescription</key>
+	<string>Access to speech recognition helps people be happier</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
@@ -29,8 +47,6 @@
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
-		<string>UIInterfaceOrientationLandscapeLeft</string>
-		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 	<key>UISupportedInterfaceOrientations~ipad</key>
 	<array>
@@ -41,5 +57,7 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>kTCCServiceMediaLibrary</key>
+	<string>Access to music helps users be happier</string>
 </dict>
 </plist>
