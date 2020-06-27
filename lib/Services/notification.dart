@@ -16,6 +16,7 @@ class PushNotificationsManager {
 
   Future<void> init() async {
     if (!_initialized) {
+      print('CAR');
       // For iOS request permission first.
       _firebaseMessaging.requestNotificationPermissions();
       _firebaseMessaging.configure(
