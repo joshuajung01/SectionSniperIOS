@@ -63,7 +63,7 @@ class _WishlistTabState extends State<WishlistTab>{
                             child: ListTile(
                               leading: Icon(CupertinoIcons.minus_circled,
                                 color: Color.fromRGBO(50, 50, 50, 1),),
-                              title: Text('Searching for '+(index-2).toString() + ' courses.'),
+                              title: Text('Searching for '+(index).toString() + ' courses.'),
                             ),
                           );
                         }
