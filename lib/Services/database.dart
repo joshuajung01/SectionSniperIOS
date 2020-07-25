@@ -15,7 +15,7 @@ class DatabaseService{
       'Current': ['CURR 123 123'],
       'Pending': ['WAIT 123 123'],
       'Recent' : ['RCNT 123 123'],
-      'Token' : 'token'
+      'Token' : 'token',
       'Update' : 0
     });
   }
