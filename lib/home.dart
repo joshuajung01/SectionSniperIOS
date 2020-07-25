@@ -44,19 +44,15 @@ class HomeScreen extends StatelessWidget{
         items: [
           BottomNavigationBarItem(
               icon: Icon(CupertinoIcons.home),
-              title: Text('Home')
           ),
           BottomNavigationBarItem(
               icon: Icon(CupertinoIcons.search),
-              title: Text('Search')
           ),
           BottomNavigationBarItem(
-              icon: Icon(CupertinoIcons.news),
-              title: Text('Wishlist')
+              icon: Icon(CupertinoIcons.news_solid),
           ),
           BottomNavigationBarItem(
-              icon: Icon(CupertinoIcons.settings),
-              title: Text('Settings')
+              icon: Icon(CupertinoIcons.settings_solid),
           ),
         ],
       ),

@@ -39,10 +39,12 @@ class _SearchResultsState extends State<SearchResults> {
                   else{
                     DetailedCourse course = allCourses.elementAt(index);
                     if(!course.selected){
-                      addIcon = Icon(CupertinoIcons.add_circled);
+                      addIcon = Icon(CupertinoIcons.add_circled,
+                        color: Color.fromRGBO(80, 0, 0, 1),);
                     }
                     else{
-                      addIcon = Icon(CupertinoIcons.check_mark_circled_solid);
+                      addIcon = Icon(CupertinoIcons.check_mark_circled_solid,
+                        color: Color.fromRGBO(80, 0, 0, 1),);
                     }
 
                     if(allCourses.elementAt(index).open > 0){

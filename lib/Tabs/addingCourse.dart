@@ -72,7 +72,7 @@ class _AddingCourseState extends State<AddingCourse> {
                                         constraints: BoxConstraints(maxWidth: 100),
                                         child: Align(
                                           alignment: Alignment.centerLeft,
-                                          child: Text('Department:'),
+                                          child: Center(child: Text('Dept:')),
                                         ),
                                       ),
                                       Container(padding: EdgeInsets.all(8.0)),
@@ -103,7 +103,7 @@ class _AddingCourseState extends State<AddingCourse> {
                                         constraints: BoxConstraints(maxWidth: 100),
                                         child: Align(
                                           alignment: Alignment.centerLeft,
-                                          child: Text('Course Num:'),
+                                          child: Center(child: Text('Course:')),
                                         ),
                                       ),
                                       Container(padding: EdgeInsets.all(8.0)),
@@ -134,7 +134,7 @@ class _AddingCourseState extends State<AddingCourse> {
                                         constraints: BoxConstraints(maxWidth: 100),
                                         child: Align(
                                           alignment: Alignment.centerLeft,
-                                          child: Text('Section Num:'),
+                                          child: Center(child: Text('Section:')),
                                         ),
                                       ),
                                       Container(padding: EdgeInsets.all(8.0)),
@@ -334,7 +334,7 @@ class _AddingCourseState extends State<AddingCourse> {
                                         constraints: BoxConstraints(maxWidth: 100),
                                         child: Align(
                                           alignment: Alignment.centerLeft,
-                                          child: Text('Department:'),
+                                          child: Center(child: Text('Dept:')),
                                         ),
                                       ),
                                       Container(padding: EdgeInsets.all(8.0)),
@@ -365,7 +365,7 @@ class _AddingCourseState extends State<AddingCourse> {
                                         constraints: BoxConstraints(maxWidth: 100),
                                         child: Align(
                                           alignment: Alignment.centerLeft,
-                                          child: Text('Course Num:'),
+                                          child: Center(child: Text('Course:')),
                                         ),
                                       ),
                                       Container(padding: EdgeInsets.all(8.0)),
@@ -396,7 +396,7 @@ class _AddingCourseState extends State<AddingCourse> {
                                         constraints: BoxConstraints(maxWidth: 100),
                                         child: Align(
                                           alignment: Alignment.centerLeft,
-                                          child: Text('Section Num:'),
+                                          child: Center(child: Text('Section:')),
                                         ),
                                       ),
                                       Container(padding: EdgeInsets.all(8.0)),

@@ -55,6 +55,7 @@ class _HomeTabState extends State<HomeTab>{
                               color: CupertinoColors.activeGreen,),
                             title: Text(openCourses.elementAt(index).toString()),
                             trailing: IconButton(icon: Icon(CupertinoIcons.add_circled),
+                              color: Color.fromRGBO(80, 0, 0, 1),
                               onPressed: (){
                                 String check = openCourses.elementAt(index).toString();
                                 userDB.addCurrentCourse(check);
@@ -83,7 +84,8 @@ class _HomeTabState extends State<HomeTab>{
                       else if(index == currentCourses.length || currentCourses.length == 0){
                         return Card(
                           child: ListTile(
-                            leading:  Icon(CupertinoIcons.add_circled_solid),
+                            leading:  Icon(CupertinoIcons.add_circled_solid,
+                                color: Color.fromRGBO(80, 0, 0, .9),),
                             title: Text('Add Current Course'),
                             onTap: (){
                               Navigator.push(
@@ -98,9 +100,11 @@ class _HomeTabState extends State<HomeTab>{
                       else{
                         return Card(
                           child: ListTile(
-                            leading: Icon(CupertinoIcons.check_mark_circled_solid,),
+                            leading: Icon(CupertinoIcons.check_mark_circled_solid,
+                              color: Color.fromRGBO(80, 0, 0, .9),),
                             title: Text(currentCourses.elementAt(index).toString()),
                             trailing: IconButton(icon: Icon(CupertinoIcons.clear_circled),
+                              color: Color.fromRGBO(80, 0, 0, 1),
                               onPressed: (){
                               String check = currentCourses.elementAt(index).toString();
                               userDB.removeCurrentCourse(check);

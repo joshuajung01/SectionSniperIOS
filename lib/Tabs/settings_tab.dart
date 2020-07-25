@@ -181,16 +181,45 @@ class DetailPage extends StatelessWidget {
                 children: <Widget>[
                   Expanded(
                     flex: 1,
-                    child: Column(
-                      children: <Widget>[
-                        Text('\n\nThis app was made during summer 2020 while everyone was stuck inside without much to do.\n'),
-                        Text('I made this app just for fun, so there may be many bugs and issues.\n'),
-                        Text('Please bear with me as I slowly work to improve the app.\n'),
-                        Text('I hope that the app works and makes your life a bit easier. Thanks for trying it out.\n\n'),
-                        Text('Thanks and gig\'em,\n'),
-                        Text('Joshua Jung \'23'),
-                        Text('Mark 10:27'),
-                      ],
+                    child: Center(
+                      child: Column(
+                        children: <Widget>[
+                          Expanded(
+                            flex: 1,
+                            child: Column(),
+                          ),
+                          Expanded(
+                            flex: 2,
+                            child: Text('This app will send you a notification when a seat becomes available in a class you want.'),
+                          ),
+                          Expanded(
+                            flex: 2,
+                            child:  Text('It is up to you to go sign up for that course when the spot opens up.'),
+                          ),
+                          Expanded(
+                            flex: 2,
+                            child: Text('This is my first time making an app, so it\'s definitely a work in progress.'),
+                          ),
+                          Expanded(
+                            flex: 2,
+                            child: Text('I hope that the app makes your life a bit easier by helping you get the classes you want with the professors you want.'),
+                          ),
+                          Expanded(
+                            flex: 3,
+                            child: Column(
+                              children: <Widget>[
+                                Text('Thanks and gig\'em,\n'),
+                                Text('Joshua Jung \'23'),
+                                Text('Mark 10:27'),
+                              ],
+                            ),
+                          ),
+                          Expanded(
+                            flex: 1,
+                            child: Column(),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ],
@@ -217,7 +246,7 @@ class DetailPage extends StatelessWidget {
                   child: Column(
                     children: <Widget>[
                       Text('Questions or Need Help?'),
-                      Text('section.sniper.help@gmail.com'),
+                      Text('tamu.selection.time@gmail.com'),
                     ],
                   ),
                 ),

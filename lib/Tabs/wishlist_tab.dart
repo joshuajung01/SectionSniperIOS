@@ -46,11 +46,34 @@ class _WishlistTabState extends State<WishlistTab>{
                   itemExtent: 50.0,
                   delegate: SliverChildBuilderDelegate(
                         (BuildContext context, int index) {
-                      if (index > pendingCourses.length) return null;
-                      else if(index == pendingCourses.length || pendingCourses.length == 0){
+                      if (index > pendingCourses.length + 1) return null;
+
+                      else if(index == pendingCourses.length){
+                        if(index > 51 ){
+                          return Card(
+                            child: ListTile(
+                              leading: Icon(CupertinoIcons.minus_circled,
+                                color: Color.fromRGBO(50, 50, 50, 1),),
+                              title: Text('Too Many Courses. Please remove '+(index - 51).toString()),
+                            ),
+                          );
+                        }
+                        else{
+                          return Card(
+                            child: ListTile(
+                              leading: Icon(CupertinoIcons.minus_circled,
+                                color: Color.fromRGBO(50, 50, 50, 1),),
+                              title: Text('Searching for '+(index-1).toString() + ' courses.'),
+                            ),
+                          );
+                        }
+                      }
+
+                      else if(index == pendingCourses.length + 1 || pendingCourses.length == 0){
                         return Card(
                           child: ListTile(
-                            leading:  Icon(CupertinoIcons.add_circled_solid),
+                            leading:  Icon(CupertinoIcons.add_circled,
+                              color: Color.fromRGBO(50, 50, 50, 1),),
                             title: Text('Add Wishlist Course'),
                             onTap: (){
                               Navigator.push(
@@ -65,9 +88,11 @@ class _WishlistTabState extends State<WishlistTab>{
                       else{
                         return Card(
                           child: ListTile(
-                            leading: CupertinoActivityIndicator(),
+                            leading: Icon(CupertinoIcons.play_arrow_solid,
+                              color: Color.fromRGBO(80, 0, 0, .85),),
                             title: Text(pendingCourses.elementAt(index).toString()),
                             trailing: IconButton(icon: Icon(CupertinoIcons.clear_circled),
+                              color: Color.fromRGBO(80, 0, 0, .9),
                               onPressed: (){
                                 userDB.removePendingCourse(pendingCourses.elementAt(index).toString());
                                 if(recentCourses.length > 10){
@@ -97,7 +122,8 @@ class _WishlistTabState extends State<WishlistTab>{
                       else if(reversedRecentCourses.length == 0){
                         return Card(
                           child: ListTile(
-                            leading: Icon(CupertinoIcons.time),
+                            leading: Icon(CupertinoIcons.time_solid,
+                              color: Color.fromRGBO(80, 0, 0, .85),),
                             title: Text('No Recent Courses'),
                           ),
                         );
@@ -105,9 +131,11 @@ class _WishlistTabState extends State<WishlistTab>{
                       else{
                         return Card(
                           child: ListTile(
-                            leading: Icon(CupertinoIcons.time),
+                            leading: Icon(CupertinoIcons.time_solid,
+                              color: Color.fromRGBO(50, 50, 50, .6),),
                             title: Text(reversedRecentCourses.elementAt(index).toString()),
-                            trailing: IconButton(icon: Icon(CupertinoIcons.add_circled),
+                            trailing: IconButton(icon: Icon(CupertinoIcons.add_circled,
+                              color: Color.fromRGBO(80, 0, 0, .9),),
                               onPressed: (){
                                 userDB.removeRecentCourse(reversedRecentCourses.elementAt(index).toString());
                                 userDB.addPendingCourse(reversedRecentCourses.elementAt(index).toString());
