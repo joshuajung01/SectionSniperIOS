@@ -114,7 +114,7 @@ class _SearchTabState extends State<SearchTab>{
                                     constraints: BoxConstraints(maxWidth: 100),
                                      child: Align(
                                       alignment: Alignment.centerLeft,
-                                      child: Text('Department:'),
+                                      child: Text('Dept:'),
                                     ),
                                   ),
                                   Container(padding: EdgeInsets.all(8.0)),
@@ -142,7 +142,7 @@ class _SearchTabState extends State<SearchTab>{
                                     constraints: BoxConstraints(maxWidth: 100),
                                     child: Align(
                                       alignment: Alignment.centerLeft,
-                                      child: Text('Course Num: '),
+                                      child: Text('Course: '),
                                     ),
                                   ),
                                   Container(padding: EdgeInsets.all(8.0)),
