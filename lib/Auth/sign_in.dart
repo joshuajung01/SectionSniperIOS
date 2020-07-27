@@ -33,7 +33,7 @@ class _SignInState extends State<SignIn> {
         navigationBar: CupertinoNavigationBar(
           middle: Align(
             alignment: Alignment.center,
-            child: Text('SectionSniper'),
+            child: Text('SelectionTime'),
           ),
         ),
         child: SafeArea(

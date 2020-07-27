@@ -83,7 +83,7 @@ class _AddingCourseState extends State<AddingCourse> {
                                               controller: _deptField,
                                               onChanged: (text) {
                                                 setState(() {
-                                                  dept = text;
+                                                  dept = text.substring(0,4);
                                                 });
                                               },
                                             ),
@@ -114,7 +114,7 @@ class _AddingCourseState extends State<AddingCourse> {
                                               controller: _courseField,
                                               onChanged: (text) {
                                                 setState(() {
-                                                  course = text;
+                                                  course = text.substring(0,3);
                                                 });
                                               },
                                             ),
@@ -145,7 +145,7 @@ class _AddingCourseState extends State<AddingCourse> {
                                               controller: _sectionField,
                                               onChanged: (text) {
                                                 setState(() {
-                                                  section = text;
+                                                  section = text.substring(0,3);
                                                 });
                                               },
                                             ),
@@ -345,7 +345,7 @@ class _AddingCourseState extends State<AddingCourse> {
                                               controller: _deptField,
                                               onChanged: (text) {
                                                 setState(() {
-                                                  dept = text;
+                                                  dept = text.substring(0,4);
                                                 });
                                               },
                                             ),
@@ -376,7 +376,7 @@ class _AddingCourseState extends State<AddingCourse> {
                                               controller: _courseField,
                                               onChanged: (text) {
                                                 setState(() {
-                                                  course = text;
+                                                  course = text.substring(0,3);
                                                 });
                                               },
                                             ),
@@ -407,7 +407,7 @@ class _AddingCourseState extends State<AddingCourse> {
                                               controller: _sectionField,
                                               onChanged: (text) {
                                                 setState(() {
-                                                  section = text;
+                                                  section = text.substring(0,3);
                                                 });
                                               },
                                             ),

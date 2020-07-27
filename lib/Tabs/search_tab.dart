@@ -123,7 +123,7 @@ class _SearchTabState extends State<SearchTab>{
                                         child: CupertinoTextField(
                                           placeholder: 'Ex: MATH',
                                           controller: _deptField,
-                                          onChanged: (text){dept = text.toUpperCase();},
+                                          onChanged: (text){dept = text.substring(0,4).toUpperCase();},
                                         ),
                                       )
                                   ),
@@ -151,7 +151,7 @@ class _SearchTabState extends State<SearchTab>{
                                         child: CupertinoTextField(
                                           placeholder: 'Ex: 151',
                                           controller: _numField,
-                                          onChanged: (text){num = text;},
+                                          onChanged: (text){num = text.substring(0,3);},
                                         ),
                                       )
                                   ),

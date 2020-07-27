@@ -13,7 +13,7 @@ class DatabaseService{
     return await courseCollection.document(uid).setData({
       'Open': ['OPEN 123 123'],
       'Current': ['CURR 123 123'],
-      'Pending': ['WAIT 123 123'],
+      'Pending': ['WISH 123 123'],
       'Recent' : ['RCNT 123 123'],
       'Token' : 'token',
       'Update' : 0

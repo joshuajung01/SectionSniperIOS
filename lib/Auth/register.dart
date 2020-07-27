@@ -34,7 +34,7 @@ class _RegisterState extends State<Register> {
       navigationBar: CupertinoNavigationBar(
         middle: Align(
           alignment: Alignment.center,
-          child: Text('SectionSniper'),
+          child: Text('SelectionTime'),
         ),
       ),
 
