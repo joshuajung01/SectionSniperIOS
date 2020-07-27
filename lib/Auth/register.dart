@@ -256,6 +256,7 @@ class _RegisterState extends State<Register> {
                                         CupertinoButton(
                                             onPressed: () {
                                               Navigator.of(context).pop();
+                                              widget.toggleView();
                                             },
                                             child: Text('Ok'))
                                       ],

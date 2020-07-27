@@ -61,8 +61,7 @@ class _WishlistTabState extends State<WishlistTab>{
                         else{
                           return Card(
                             child: ListTile(
-                              leading: Icon(CupertinoIcons.minus_circled,
-                                color: Color.fromRGBO(50, 50, 50, 1),),
+                              leading: CupertinoActivityIndicator(),
                               title: Text('Searching for '+(index).toString() + ' courses.'),
                             ),
                           );

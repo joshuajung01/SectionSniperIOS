@@ -190,7 +190,7 @@ class DetailPage extends StatelessWidget {
                           ),
                           Expanded(
                             flex: 2,
-                            child: Text('This app will send you a notification when a seat becomes available in a class you want.'),
+                            child: Text('This app will send you a notification when a seat becomes available in a class for the upcoming semester FALL 2020.'),
                           ),
                           Expanded(
                             flex: 2,

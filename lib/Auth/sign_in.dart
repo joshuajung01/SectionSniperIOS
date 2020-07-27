@@ -246,22 +246,22 @@ class _SignInState extends State<SignIn> {
                                   await _auth.signOut();
                                   await _auth.signInWithEmailAndPassword(email, password);
                                   setState(() => loading = false);
-                                  showCupertinoDialog(
-                                      context: context,
-                                      builder: (context){
-                                        return CupertinoAlertDialog(
-                                          title: Text('Log-In Successful'),
-                                          content: Text('This app is still in Beta.\nTell Joshua if you find any bugs'),
-                                          actions: <Widget>[
-                                            CupertinoButton(
-                                                onPressed: () {
-                                                  Navigator.of(context).pop();
-                                                },
-                                                child: Text('Ok'))
-                                          ],
-                                        );
-                                      }
-                                  );
+//                                  showCupertinoDialog(
+//                                      context: context,
+//                                      builder: (context){
+//                                        return CupertinoAlertDialog(
+//                                          title: Text('Log-In Successful'),
+//                                          content: Text('This app is still in Beta.\nTell Joshua if you find any bugs'),
+//                                          actions: <Widget>[
+//                                            CupertinoButton(
+//                                                onPressed: () {
+//                                                  Navigator.of(context).pop();
+//                                                },
+//                                                child: Text('Ok'))
+//                                          ],
+//                                        );
+//                                      }
+//                                  );
                                 }
                               }
                             },

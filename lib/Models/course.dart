@@ -1,21 +1,21 @@
 class Course {
   String dept;
-  int num;
-  int sec;
+  String num;
+  String sec;
 
-  Course(String d, int n, int s){
+  Course(String d, String n, String s){
     this.dept = d;
     this.num = n;
     this.sec = s;
   }
 
   String getDept() => dept;
-  int getNum() => num;
-  int getSec() => sec;
+  String getNum() => num;
+  String getSec() => sec;
 
   void setDept(String d) {dept = d;}
-  void setNum(int n) {num = n;}
-  void setSec(int s) {sec = s;}
+  void setNum(String n) {num = n;}
+  void setSec(String s) {sec = s;}
 
   @override
   String toString() => '$dept $num $sec';
