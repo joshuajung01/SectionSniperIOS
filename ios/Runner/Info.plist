@@ -5,7 +5,7 @@
 	<key></key>
 	<string>Access to music helps users be happier</string>
 	<key>CFBundleName</key>
-	<string>TAMU Selection Time</string>
+	<string>SelectionTime</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>NSAppleMusicUsageDescription</key>
