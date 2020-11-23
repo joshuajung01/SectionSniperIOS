@@ -33,7 +33,7 @@ class _SearchTabState extends State<SearchTab>{
   Future requestSections(String depts, String nums) async{
     Map<String, String> headers = {};
     String url = 'https://compassxe-ssb.tamu.edu/StudentRegistrationSsb/ssb/term/search?mode=courseSearch';
-    var data = {'dataType': 'json', 'term': '202031'};
+    var data = {'dataType': 'json', 'term': '202111'};
 
     http.Response response = await http.post(url, body: data);
     String rawCookie = response.headers['set-cookie'];
@@ -47,7 +47,7 @@ class _SearchTabState extends State<SearchTab>{
 
 
     //smile
-    String url2 = 'https://compassxe-ssb.tamu.edu/StudentRegistrationSsb/ssb/searchResults/searchResults?txt_subjectcoursecombo='+ depts + nums +'&txt_term=202031&pageOffset=0&pageMaxSize=500&sortColumn=subjectDescription&sortDirection=asc';
+    String url2 = 'https://compassxe-ssb.tamu.edu/StudentRegistrationSsb/ssb/searchResults/searchResults?txt_subjectcoursecombo='+ depts + nums +'&txt_term=202111&pageOffset=0&pageMaxSize=500&sortColumn=subjectDescription&sortDirection=asc';
     http.Response response2 = await http.get(url2, headers: headers);
     return json.decode(response2.body);
   }
